@@ -17,6 +17,12 @@ Powered directly by **DataForSEO API Infrastructure** with zero monthly retainer
 * **Extension ID**: `mpphhakiifalmlkphalklimjfkhkpbmp`
 * **Chrome Store**: 👉 **[Install SEO360 on Chrome Web Store](https://chromewebstore.google.com/detail/mpphhakiifalmlkphalklimjfkhkpbmp)**
 
+#### 📸 Live Workbench Preview
+
+| 1. Parameter Tuning & Endpoint Selection | 2. Live JSON Response & Tree Inspection |
+| :---: | :---: |
+| ![Intuitive Parameter Tuning](images/01.png) | ![Live Foldable JSON Response Tree](images/02.png) |
+
 ---
 
 ### 🔍 [Competitor Keyword Finder](https://chromewebstore.google.com/detail/competitor-keyword-finder/mmcajkhbkkhmcbaabeajefkdaciohodc)
