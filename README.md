@@ -1,94 +1,89 @@
-# SEO360 — Open SEO Micro-Tools & DataForSEO Workbench
+# SEO360 — Free & Lightweight Chrome Tools for Smart SEO
 
-A curated directory and open ecosystem of high-performance, lightweight browser utilities tailored for **indie hackers, SaaS builders, developers, and modern SEO practitioners**.
+Stop paying $100+ every month for bloated SEO subscriptions.
 
-Powered directly by **DataForSEO API Infrastructure** with zero monthly retainers and zero platform markups.
+**SEO360** gives content creators, bloggers, small business owners, and beginners access to professional-grade Google ranking data directly from their browser — paying only pennies for what you actually use.
 
-🌐 **Official Hub & Interactive Tools Directory**:  
-👉 **[Launch SEO360 Hub & Tools Directory (Live Platform)](https://seo360.pages.dev)**
+No complicated code. No recurring monthly fees. All features are delivered via lightweight Chrome extensions. 100% open-source and safe.
+
+🌐 **Official Homepage & User Guides**:  
+👉 **[Visit the SEO360 Website](https://seo360.pages.dev)**
 
 ---
 
-## 🛠️ Featured Extensions (Available on Chrome Web Store)
+## 🔒 100% Client-Side & Private (Safe by Design)
 
-### ⚡ [SEO360 — Visual DataForSEO API Client & SERP Tester](https://chromewebstore.google.com/detail/mpphhakiifalmlkphalklimjfkhkpbmp) *(Flagship)*
-*The universal visual console and zero-code debugging workbench built specifically for DataForSEO. Test any live endpoint (SERP, Keywords, Backlinks, Labs), inspect foldable JSON trees, view dynamic tables, export CSVs, and generate multi-language code snippets.*
-* **Status**: 🟢 Active (Available Now)
-* **Extension ID**: `mpphhakiifalmlkphalklimjfkhkpbmp`
-* **Chrome Store**: 👉 **[Install SEO360 on Chrome Web Store](https://chromewebstore.google.com/detail/mpphhakiifalmlkphalklimjfkhkpbmp)**
+- **Your Keys Stay on Your Computer**: This project is fully open source. Your DataForSEO login is saved only in your own browser's local storage and is never uploaded to any external server.
+- **Pay as You Go**: Instead of paying a mandatory $99–$129/month plan, you pay fractions of a cent ($0.02 ~ $0.04) directly to DataForSEO per query. Your account balance never expires.
+- **Pure Browser Extensions**: Zero servers in between, clean visual forms, clear tables, and instant export to Excel/JSON.
 
-#### 📸 Live Workbench Preview
+---
 
-| 1. Parameter Tuning & Endpoint Selection | 2. Live JSON Response & Tree Inspection |
+## 🛠️ Ready-to-Use Chrome Extensions
+
+### ⚡ [SEO360 — Visual DataForSEO Client & Rank Checker](https://chromewebstore.google.com/detail/mpphhakiifalmlkphalklimjfkhkpbmp) *(Main Tool)*
+*The simplest way to check real Google rankings, find high-traffic keywords, and export SEO data right inside your browser without writing a single line of code or terminal command.*
+* **Type**: Chrome Extension
+* **Status**: 🟢 Available Now
+* **Chrome Store**: 👉 **[Install from Chrome Web Store](https://chromewebstore.google.com/detail/mpphhakiifalmlkphalklimjfkhkpbmp)**
+
+#### 📸 Quick Preview
+
+| 1. Fill Simple Forms (No Coding) | 2. Read Results in Clean Tables & JSON |
 | :---: | :---: |
-| ![Intuitive Parameter Tuning](images/01.png) | ![Live Foldable JSON Response Tree](images/02.png) |
+| ![Simple Parameter Form](images/01.png) | ![Clean Structured Output](images/02.png) |
 
 ---
 
 ### 🔍 [Competitor Keyword Finder](https://chromewebstore.google.com/detail/competitor-keyword-finder/mmcajkhbkkhmcbaabeajefkdaciohodc)
-*Instant Chrome extension to reverse-engineer competitor domains, uncover high-intent organic keywords, filter out ultra-competitive queries, and identify Blue Ocean ranking opportunities with automated 0–100 opportunity scoring.*
-* **Status**: 🟢 Active (Available Now)
-* **Chrome Store**: 👉 **[Install Competitor Keyword Finder on Chrome Web Store](https://chromewebstore.google.com/detail/competitor-keyword-finder/mmcajkhbkkhmcbaabeajefkdaciohodc)**
+*See which keywords bring traffic to your competitors. Uncover their top-ranking pages in seconds and discover easy ranking opportunities for your own site.*
+* **Type**: Chrome Extension
+* **Status**: 🟢 Available Now
+* **Chrome Store**: 👉 **[Install from Chrome Web Store](https://chromewebstore.google.com/detail/competitor-keyword-finder/mmcajkhbkkhmcbaabeajefkdaciohodc)**
 
 ---
 
 ### ⚔️ [Compare 2 Websites SEO](https://chromewebstore.google.com/detail/compare-2-websites-seo-co/mfoehhkaioagppbbbknhehglkeidncco)
-*Side-by-side SEO comparison tool. Inspect on-page DOM structures, content density, word counts, and heading hierarchies directly in the browser, combined with head-to-head Google ranking positions and organic keyword gaps.*
-* **Status**: 🟢 Active (Available Now)
-* **Chrome Store**: 👉 **[Install Compare 2 Websites SEO on Chrome Web Store](https://chromewebstore.google.com/detail/compare-2-websites-seo-co/mfoehhkaioagppbbbknhehglkeidncco)**
+*Compare any two websites side-by-side right inside your browser tab. Inspect word count, headings, and Google ranking gaps in one click.*
+* **Type**: Chrome Extension
+* **Status**: 🟢 Available Now
+* **Chrome Store**: 👉 **[Install from Chrome Web Store](https://chromewebstore.google.com/detail/compare-2-websites-seo-co/mfoehhkaioagppbbbknhehglkeidncco)**
 
 ---
 
-## 🎯 About The Project
+## 💡 Why SEO360?
 
-Traditional enterprise SEO suites (like Ahrefs or Semrush) are heavily bloated, inflexible, and lock users into aggressive $120–$500/month recurring subscriptions.
+Most big SEO tools (like Ahrefs or Semrush) force you to buy expensive subscriptions with hundreds of features you rarely touch.
 
-**SEO360** takes an autonomous, developer-first micro-utility approach:
-1. **Direct Infrastructure Access**: Instead of paying third-party markups, connect directly to **DataForSEO**—the raw data backbone trusted by top-tier SEO software and data platforms worldwide.
-2. **Bring Your Own Key (BYOK)**: No mandatory accounts, no middleman credit cards, and zero usage limits imposed by us. You retain 100% control over your official API credentials.
-3. **Single-Purpose Efficiency**: Lightweight browser extensions that run on-demand directly inside your browser tab without persistent memory drain or background tracking.
-
----
-
-## ⚡ Core Capabilities Across The Ecosystem
-
-Through the central hub, users access a modular toolchain covering the end-to-end organic growth and search engine intelligence workflow:
-
-- **Universal API Console**: Debug any DataForSEO live route using intuitive dynamic forms, smart array inputs, and live response parsers.
-- **SERP Position Tracking**: Real-time Google organic rank validation across 75+ global target locations with instant live JSON/table payloads.
-- **Keyword Research & Opportunity Scoring**: Brainstorm keyword ideas from seed phrases, retrieve monthly search volumes, evaluate Google Ads CPC bids, and discover low-competition long-tail keywords.
-- **Competitor Reverse-Engineering**: Extract the complete organic keyword footprint of competing domains and monitor ranking shifts.
-- **Backlink Profile Summaries**: Analyze domain rank authority scores, referring domain counts, and backlink spam risks on demand.
-- **Multi-Language Code Generation**: Convert tuned visual API parameters directly into production-ready request code in **Python, Node.js, cURL, PHP, Go, and Java**.
+**SEO360 changes the game:**
+1. **Wholesale Pricing**: You connect straight to DataForSEO — the raw data provider behind major SEO platforms — paying only $0.02 to $0.04 per search.
+2. **Beginner Friendly**: Click buttons, enter a keyword or competitor URL, and view clear tables.
+3. **AI-Ready Exports**: Download your data with one click to paste straight into ChatGPT, Gemini, or Claude for instant content suggestions and competitor gap analysis.
 
 ---
 
-## 🔒 Security & BYOK Architecture
+## 🚀 How to Install & Get Started
 
-All extensions in this repository follow strict privacy and security standards:
+### Option 1: Install from Chrome Web Store (Recommended for Everyone)
+1. Visit the **[SEO360 Extension Page](https://chromewebstore.google.com/detail/mpphhakiifalmlkphalklimjfkhkpbmp)** on the Chrome Web Store.
+2. Click **Add to Chrome**.
+3. Pin the extension to your toolbar, enter your DataForSEO account credentials, and you're good to go!
 
-- **Local Credential Isolation**: Your DataForSEO API Login and Password are saved solely in your local browser sandbox (`chrome.storage.local`).
-- **Zero Intermediary Servers**: Network requests are dispatched directly from your browser client to `https://api.dataforseo.com/v3/`. No requests are routed through, logged, or proxied by external third-party backends.
-- **No Recurring Fees**: Pay DataForSEO directly on official pay-per-request micropayment terms ($0.002 to $0.01 per query), saving up to 90% compared to traditional subscription SaaS tools.
-- **Minimal Permissions**: No background keystroke monitoring, zero history tracking, and no external advertising analytics bundled.
-
----
-
-## 🚀 Live Directory & Navigation
-
-Explore the web directory, read documentation, and install individual extensions:
-
-👉 **[Visit the Live SEO360 Directory Hub](https://seo360.pages.dev)**
+### Option 2: Run from Source Code (For Developers)
+1. Download or clone this GitHub repository.
+2. Open Chrome and go to `chrome://extensions/`.
+3. Toggle on **Developer mode** in the top right corner.
+4. Click **Load unpacked** and select the `chrome-extension` folder.
 
 ---
 
-## 📬 Contact & Contributions
+## 📬 Need Help or Have Feedback?
 
-Feedback, feature requests, or new endpoint integration inquiries are welcome!
-- **Directory Hub**: [https://seo360.pages.dev](https://seo360.pages.dev)
-- **Direct Support & Developer Inquiries**: `iansilas@proton.me`
+Have questions or want a new feature added? We’d love to hear from you:
+- **Official Website & Guides**: [https://seo360.pages.dev](https://seo360.pages.dev)
+- **Email**: `iansilas@proton.me`
 
 ---
 
 ### Disclaimer
-*SEO360 is an independent open-source suite and is not officially affiliated with, endorsed by, or sponsored by Google LLC or DataForSEO. All trademarks belong to their respective owners.*
+*SEO360 is an independent open-source project and is not officially affiliated with, endorsed by, or sponsored by Google LLC or DataForSEO. All trademarks belong to their respective owners.*
