@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "SEO360 - DataForSEO API Client & SERP Tester",
+  "version": "1.0.3",
+  "description": "Free visual console & universal API tester for DataForSEO. Debug endpoints, inspect JSON trees, export CSV & generate code.",
+  "icons": {
+    "16": "icon/icon16.png",
+    "48": "icon/icon48.png",
+    "128": "icon/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "SEO360",
+    "default_icon": {
+      "16": "icon/icon16.png",
+      "48": "icon/icon48.png",
+      "128": "icon/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://api.dataforseo.com/*",
+    "https://seo360.pages.dev/*"
+  ]
+}

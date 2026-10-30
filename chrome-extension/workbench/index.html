@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SEO360 Console</title>
+  <link rel="stylesheet" href="workbench.css">
+</head>
+<body>
+  <div class="workbench-layout">
+    <!-- Left Endpoint Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-title">SEO360</div>
+        <button id="btn-open-settings" class="btn-tool" title="API Credentials">⚙ Credentials</button>
+      </div>
+
+      <div class="search-wrap">
+        <input type="text" id="api-search" placeholder="Search Google endpoints..." autocomplete="off">
+      </div>
+
+      <div class="sidebar-list" id="api-list">
+        <div class="api-card-item custom-api-entry" id="entry-custom-api">
+          <div class="api-card-desc">⚡ Custom API Debugger</div>
+          <div class="api-card-sub">Test any custom DataForSEO endpoint</div>
+        </div>
+        <div id="dynamic-api-container"></div>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="feedback-hint">Need more endpoints?</div>
+        <div class="copy-email-box" id="btn-copy-email" title="Click to copy email">
+          <span class="email-text">iansilas@proton.me</span>
+          <span class="copy-icon">📋</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Right Main Console -->
+    <main class="console-body">
+      <!-- Header Bar -->
+      <section class="panel-card header-panel">
+        <div class="endpoint-info">
+          <span class="endpoint-badge">POST</span>
+          <span class="endpoint-prefix">https://api.dataforseo.com/v3/</span>
+          <span class="endpoint-path" id="curr-api-path">serp/google/organic/live/regular</span>
+          <div id="custom-path-wrap" class="custom-path-wrap hidden">
+            <input type="text" id="custom-api-input" class="custom-path-input" placeholder="e.g. keywords_data/google_ads/search_volume/live">
+            <button id="btn-paste-custom-path" type="button" class="btn btn-outline btn-sm btn-paste" title="Paste from clipboard">📋 Paste</button>
+          </div>
+        </div>
+
+        <div class="action-bar">
+          <div class="balance-pill" id="btn-refresh-top-balance" title="Click to sync account balance">
+            <span class="balance-pill-label">BALANCE:</span>
+            <span class="balance-pill-val" id="top-balance-val">$0.00</span>
+            <span id="top-balance-spinner" class="spinner-mini hidden"></span>
+          </div>
+
+          <a id="link-dataforseo-home" href="https://dataforseo.com/" target="_blank" class="btn btn-outline">DataForSEO ↗</a>
+          <button id="btn-open-favorites" class="btn btn-outline">⭐ Presets</button>
+        </div>
+      </section>
+
+      <!-- Request Parameters Panel -->
+      <section class="panel-card">
+        <div class="panel-title-bar">
+          <div>
+            <h2>Request Parameters</h2>
+            <span class="hint">Press <strong>Enter</strong> to jump or auto-create fields.</span>
+          </div>
+          <button id="btn-add-field" class="btn btn-outline btn-sm">+ Add Parameter</button>
+        </div>
+
+        <div class="params-table">
+          <div class="params-row params-row-head">
+            <div class="col-key">KEY</div>
+            <div class="col-val">VALUE</div>
+            <div class="col-del"></div>
+          </div>
+          <div id="params-container" class="params-rows-wrap">
+            <!-- Dynamic rows -->
+          </div>
+        </div>
+
+        <div class="params-submit-bar">
+          <button id="btn-save-favorite" class="btn btn-outline" title="Save current endpoint & payload">Save Preset</button>
+          <button id="btn-send-request" class="btn btn-solid">
+            <span class="btn-spinner hidden" id="send-spinner"></span>
+            <span id="send-btn-text">Send Request</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Response Panel -->
+      <section class="panel-card">
+        <div class="panel-title-bar">
+          <div class="res-title-group">
+            <h2>Response (JSON Tree)</h2>
+            <span class="hint">Click node buttons to view as table or export.</span>
+          </div>
+          <div class="res-actions">
+            <span id="res-status" class="status-tag">IDLE</span>
+            <button id="btn-copy-full-json" class="btn btn-outline btn-sm" disabled>Copy JSON</button>
+            <button id="btn-export-full-json" class="btn btn-outline btn-sm" disabled>Export Full JSON</button>
+          </div>
+        </div>
+
+        <div id="view-tree-container" class="response-tree-view">
+          <div class="empty-tip">// Output payload will be displayed here after sending a request.</div>
+        </div>
+      </section>
+
+      <!-- Code Snippet Panel -->
+      <section class="panel-card">
+        <div class="panel-title-bar">
+          <div class="code-title-left">
+            <h2>Code Snippet</h2>
+            <div class="lang-selector">
+              <button class="lang-btn active" data-lang="curl">cURL</button>
+              <button class="lang-btn" data-lang="python">Python</button>
+              <button class="lang-btn" data-lang="nodejs">Node.js</button>
+              <button class="lang-btn" data-lang="php">PHP</button>
+              <button class="lang-btn" data-lang="go">Go</button>
+              <button class="lang-btn" data-lang="java">Java</button>
+            </div>
+          </div>
+          <div class="code-title-right">
+            <button id="btn-toggle-include-creds" class="btn btn-outline btn-sm" title="Toggle including real credentials in snippet">
+              Include Credentials: <strong id="lbl-include-creds-status">OFF</strong>
+            </button>
+          </div>
+        </div>
+        <div class="code-box">
+          <pre id="code-snippet">// Code will be generated automatically...</pre>
+          <button id="btn-copy-code" class="btn btn-outline btn-sm copy-float-btn">Copy Snippet</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Community Floating Widget -->
+  <div class="discuss-widget">
+    <button id="btn-discuss-toggle" class="discuss-btn">💬 Community &amp; Help</button>
+    <div id="discuss-menu" class="discuss-menu hidden"></div>
+  </div>
+
+  <!-- Modal 1: Credentials -->
+  <div id="modal-creds" class="modal-layer hidden">
+    <div class="modal-window">
+      <h3>DataForSEO API Credentials</h3>
+      <p class="modal-sub">Credentials are required to execute API calls and fetch your account balance.</p>
+
+      <div class="input-block">
+        <label>API Login (Your registration email)</label>
+        <input type="text" id="cfg-api-login" placeholder="e.g. name@company.com">
+      </div>
+      <div class="input-block">
+        <label>API Password (API key token)</label>
+        <input type="password" id="cfg-api-pass" placeholder="Your API access token">
+      </div>
+
+      <div class="modal-foot">
+        <a id="link-goto-guide" href="#" class="foot-guide-link">Need an API key? Read Setup Guide ↗</a>
+        <div class="foot-btns">
+          <button id="btn-cancel-creds" class="btn btn-outline">Cancel</button>
+          <button id="btn-save-creds" class="btn btn-solid">Save &amp; Continue</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Presets -->
+  <div id="modal-favorites" class="modal-layer hidden">
+    <div class="modal-window modal-wide">
+      <div class="modal-head-line">
+        <h3>Saved Presets</h3>
+        <button id="btn-close-fav" class="close-x">&times;</button>
+      </div>
+      <p class="modal-sub">Presets retain endpoint path and parameters across all modes.</p>
+      <div id="favorites-list-container" class="fav-scroll"></div>
+    </div>
+  </div>
+
+  <!-- Modal 2.1: Save Preset with Note -->
+  <div id="modal-save-preset" class="modal-layer hidden">
+    <div class="modal-window">
+      <h3>Save Preset</h3>
+      <p class="modal-sub">Save current endpoint and parameters. You can optionally add a note.</p>
+
+      <div class="input-block">
+        <label>Note (Optional)</label>
+        <input type="text" id="input-preset-note" placeholder="e.g. US Mobile SERP test, Client A..." autocomplete="off">
+      </div>
+
+      <div class="modal-foot" style="justify-content: flex-end;">
+        <div class="foot-btns">
+          <button id="btn-cancel-save-preset" class="btn btn-outline">Cancel</button>
+          <button id="btn-confirm-save-preset" class="btn btn-solid">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 3: Stack Modal Mount -->
+  <div id="nested-modals-root"></div>
+
+  <!-- Modal 4: Parameter Detail Modal -->
+  <div id="modal-param-detail" class="modal-layer hidden">
+    <div class="modal-window modal-wide">
+      <div class="modal-head-line">
+        <h3 id="param-detail-title">Parameter Description</h3>
+        <button id="btn-close-param-detail" class="close-x">&times;</button>
+      </div>
+      <p class="modal-sub">Click any highlighted code to apply it directly to the field value.</p>
+      <div id="param-detail-body" class="param-detail-body-box"></div>
+    </div>
+  </div>
+
+  <!-- Modal 5: Array List Editor -->
+  <div id="modal-array-editor" class="modal-layer hidden">
+    <div class="modal-window modal-wide">
+      <div class="modal-head-line">
+        <div>
+          <h3 id="array-editor-title">Edit List Items</h3>
+          <p class="modal-sub" style="margin-bottom:0;">Add items one by one, or paste items separated by newlines.</p>
+        </div>
+        <button id="btn-close-array-modal" class="close-x">&times;</button>
+      </div>
+
+      <div class="array-batch-box">
+        <textarea id="array-batch-textarea" placeholder="Paste keywords here (one per line, separated by newlines)..." rows="3"></textarea>
+        <button id="btn-batch-import" class="btn btn-outline btn-sm">Batch Add Lines</button>
+      </div>
+
+      <div id="array-items-list" class="array-items-scroll"></div>
+
+      <div class="modal-foot">
+        <button id="btn-add-array-item" class="btn btn-outline btn-sm">+ Add Item</button>
+        <div class="foot-btns">
+          <button id="btn-cancel-array" class="btn btn-outline">Cancel</button>
+          <button id="btn-save-array" class="btn btn-solid">Save List</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast-box"></div>
+
+  <script src="workbench.js"></script>
+</body>
+</html>

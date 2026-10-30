@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SEO360</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-wrap">
+    <div class="popup-head">
+      <div class="brand-group">
+        <span class="logo-text">SEO360</span>
+        <span class="badge-sub">DataForSEO</span>
+      </div>
+      <button id="btn-refresh-balance" class="icon-refresh-btn" title="Refresh Balance">↻</button>
+    </div>
+
+    <!-- 实时余额卡片 -->
+    <div class="balance-card">
+      <div class="balance-label">ACCOUNT BALANCE</div>
+      <div class="balance-val-row">
+        <span class="currency-symbol">$</span>
+        <span id="account-balance" class="balance-num">--.----</span>
+        <span id="balance-spinner" class="spinner-sm hidden"></span>
+      </div>
+      <div id="account-email" class="balance-email">No credentials configured</div>
+    </div>
+
+    <!-- 按钮组：Launch Console 置于最上方 -->
+    <div class="action-grid">
+      <button id="btn-open-workbench" class="action-btn action-primary">Launch Console ↗</button>
+      <button id="btn-copy-tab-url" class="action-btn action-secondary">Copy Current URL 📋</button>
+      <button id="btn-open-tutorial" class="action-btn action-secondary">Setup Guide ↗</button>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden">URL Copied!</div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
