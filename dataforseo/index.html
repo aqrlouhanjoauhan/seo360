@@ -1,0 +1,6 @@
+<!DOCTYPE html>
+<script>
+fetch('base.json')
+  .then(r => r.json())
+  .then(d => location.href = d.affiliate_url);
+</script>
