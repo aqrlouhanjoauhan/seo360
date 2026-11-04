@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "SEO360: DataForSEO Free No-Code API Test Tool",
-  "version": "1.0.6",
+  "version": "1.0.8",
   "description": "Free visual console & universal API tester for DataForSEO. Debug endpoints, inspect JSON trees, export CSV & generate code.",
   "icons": {
     "16": "icon/icon16.png",
