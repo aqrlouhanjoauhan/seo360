@@ -249,7 +249,7 @@ async function switchOfficialApi(apiItem, activeElement) {
 }
 
 // 7. Switch to Custom Mode
-async function switchToCustomMode(initialPath = '', initialPayload = null) {
+async function switchToCustomMode(initialPath = '', initialPayload = null, paramOrder = null) {
   isCustomMode = true;
   currentApiItem = null;
   
@@ -283,7 +283,13 @@ async function switchToCustomMode(initialPath = '', initialPayload = null) {
   container.innerHTML = '';
 
   if (initialPayload && Object.keys(initialPayload).length > 0) {
-    for (const [k, v] of Object.entries(initialPayload)) {
+    // 严格按顺序载入
+    const keys = Array.isArray(paramOrder) && paramOrder.length > 0 
+      ? paramOrder.filter(k => initialPayload.hasOwnProperty(k))
+      : Object.keys(initialPayload);
+
+    for (const k of keys) {
+      const v = initialPayload[k];
       const isArr = Array.isArray(v);
       const def = await fetchParamDefinition(k);
       const desc = def?.description || 'Custom parameter';
@@ -293,8 +299,10 @@ async function switchToCustomMode(initialPath = '', initialPayload = null) {
   } else {
     const kwDef = await fetchParamDefinition('keyword');
     const locDef = await fetchParamDefinition('location_code');
+    const langDef = await fetchParamDefinition('language_code');
     addParamRow('keyword', 'best running shoes', kwDef?.description || 'Search keyword', true, kwDef?.type || 'string');
     addParamRow('location_code', '2840', locDef?.description || 'Country code', true, locDef?.type || 'number');
+    addParamRow('language_code', 'en', langDef?.description || 'Language code', true, langDef?.type || 'string');
   }
 
   refreshCodeOutput();
@@ -644,15 +652,17 @@ function addArrayItemInputRow(val = '') {
   return row;
 }
 
-// 10. Extract Payload: Intelligent Auto-Parse for JSON Array / Object
-function extractPayload() {
+// 10. Extract Payload: Intelligent Auto-Parse for JSON Array / Object & Record Ordering
+function extractPayloadWithOrder() {
   const obj = {};
+  const order = [];
   document.querySelectorAll('#params-container .params-row').forEach(row => {
     const k = row.querySelector('.field-key-input').value.trim();
     const rawVal = row.querySelector('.field-val-input')?.value.trim() ?? '';
     const type = row.dataset.type;
 
     if (k) {
+      order.push(k);
       if (type === 'array') {
         try {
           obj[k] = JSON.parse(rawVal);
@@ -679,7 +689,11 @@ function extractPayload() {
       }
     }
   });
-  return [obj];
+  return { payload: [obj], order };
+}
+
+function extractPayload() {
+  return extractPayloadWithOrder().payload;
 }
 
 // 11. Code Output with Predefined Variables
@@ -1047,7 +1061,7 @@ function createTreeNode(key, value, isRoot = false, depth = 0, parentPath = '') 
   return node;
 }
 
-// 14. Stack Modal Engine: 严格区分 Table 模式与 Tree 模式的顶部操作按钮
+// 14. Stack Modal Engine
 function renderSmartTableCell(val, fieldName, currentPath = '') {
   if (val === undefined || val === null) {
     return `<span style="color:#94a3b8;font-style:italic;">null</span>`;
@@ -1112,7 +1126,6 @@ function openStackModal(viewMode, nodeData, nodeName = 'node') {
   const backBtnText = depth > 1 ? '← Back' : '← Close';
   const modeTitlePrefix = viewMode === 'table' ? '📊 Table' : '🌳 Tree';
 
-  // 表格模式展示 Copy CSV / Export CSV，树模式展示 Copy JSON / Export JSON
   const actionButtonsHtml = viewMode === 'table' ? `
     <button class="btn btn-outline btn-sm action-copy-csv">Copy CSV</button>
     <button class="btn btn-outline btn-sm action-export-csv">Export CSV</button>
@@ -1159,7 +1172,6 @@ function openStackModal(viewMode, nodeData, nodeName = 'node') {
       }
     });
 
-    // 绑定表格模式下的专属事件：Copy CSV & Export CSV
     backdrop.querySelector('.action-copy-csv').addEventListener('click', () => {
       copyCsvToClipboard(nodeData);
     });
@@ -1173,7 +1185,6 @@ function openStackModal(viewMode, nodeData, nodeName = 'node') {
     mountPoint.className = 'modal-tree-container';
     renderJsonTree(nodeData, mountPoint);
 
-    // 绑定树模式下的专属事件：Copy JSON & Export JSON
     backdrop.querySelector('.action-copy-json').addEventListener('click', () => {
       copyJsonToClipboard(nodeData);
     });
@@ -1320,7 +1331,7 @@ function copyCsvToClipboard(dataList) {
   });
 }
 
-function downloadJsonFile(filename, dataObj) {
+function downloadJsonFile(filename, dataObj, successMessage = null) {
   if (dataObj === undefined) return;
   const str = JSON.stringify(dataObj, null, 2);
   const blob = new Blob([str], { type: 'application/json;charset=utf-8;' });
@@ -1330,7 +1341,7 @@ function downloadJsonFile(filename, dataObj) {
   a.download = filename;
   a.click();
   URL.revokeObjectURL(url);
-  triggerToast(`Exported: ${filename}`);
+  triggerToast(successMessage || `Exported: ${filename}`);
 }
 
 function exportToCsv(dataList, fullFilename) {
@@ -1390,12 +1401,6 @@ function setupGlobalEvents() {
       }
     };
   }
-
-  document.getElementById('btn-copy-email').onclick = () => {
-    navigator.clipboard.writeText('iansilas@proton.me').then(() => {
-      triggerToast('Email copied: iansilas@proton.me');
-    });
-  };
 
   const btnRefreshBal = document.getElementById('btn-refresh-top-balance');
   if (btnRefreshBal) {
@@ -1532,9 +1537,10 @@ function setupGlobalEvents() {
     closeModal('modal-save-preset');
   };
 
+  // 严格记录参数的排列顺序
   const doSavePreset = async () => {
     const apiPath = getEffectiveApiPath();
-    const payload = extractPayload();
+    const { payload, order } = extractPayloadWithOrder();
     const note = document.getElementById('input-preset-note')?.value.trim() || '';
     const storeKey = 'global_api_presets';
     const list = (await chrome.storage.local.get([storeKey]))[storeKey] || [];
@@ -1545,7 +1551,8 @@ function setupGlobalEvents() {
       name: currentApiItem ? (currentApiItem.desc || currentApiItem.api) : `Custom: ${apiPath}`,
       time: new Date().toLocaleTimeString(),
       note: note,
-      payload: payload
+      payload: payload,
+      param_order: order // 定格顺序
     };
 
     list.unshift(newPreset);
@@ -1562,13 +1569,97 @@ function setupGlobalEvents() {
     }
   });
 
-  // Presets: Open & Delete
+  // Presets: Open & Close Modal
   document.getElementById('btn-open-favorites').onclick = async () => {
     await renderFavoritesList();
     openModal('modal-favorites');
   };
 
   document.getElementById('btn-close-fav').onclick = () => closeModal('modal-favorites');
+
+  // Presets: Import & Export Logic (去重合并，去除 json 字样)
+  const storeKey = 'global_api_presets';
+
+  document.getElementById('btn-export-presets').onclick = async () => {
+    const list = (await chrome.storage.local.get([storeKey]))[storeKey] || [];
+    if (!list.length) {
+      triggerToast('No presets to export');
+      return;
+    }
+    const timestamp = new Date().toISOString().slice(0, 10);
+    downloadJsonFile(`seo360_backup_${timestamp}.json`, list, `Exported ${list.length} presets`);
+  };
+
+  const fileInputEl = document.getElementById('file-import-presets');
+  document.getElementById('btn-import-presets').onclick = () => {
+    fileInputEl.value = '';
+    fileInputEl.click();
+  };
+
+  fileInputEl.onchange = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    try {
+      const text = await file.text();
+      let imported = JSON.parse(text);
+
+      if (!Array.isArray(imported)) {
+        if (typeof imported === 'object' && imported !== null && imported.payload) {
+          imported = [imported];
+        } else {
+          triggerToast('Invalid presets file format');
+          return;
+        }
+      }
+
+      const existingList = (await chrome.storage.local.get([storeKey]))[storeKey] || [];
+      
+      // 去重特征判定：严格比对核心内容 (api + note + payload 内容)
+      const getPresetFingerprint = (item) => {
+        const api = item.api || '';
+        const note = item.note || '';
+        const payloadStr = JSON.stringify(item.payload || []);
+        return `${api}:::${note}:::${payloadStr}`;
+      };
+
+      const existingFingerprints = new Set(existingList.map(getPresetFingerprint));
+      let addedCount = 0;
+
+      imported.forEach(item => {
+        if (item && item.payload) {
+          const fp = getPresetFingerprint(item);
+          if (!existingFingerprints.has(fp)) {
+            existingFingerprints.add(fp);
+            
+            // 兼容可能遗漏的 param_order 字段
+            let order = item.param_order;
+            if (!Array.isArray(order) && item.payload[0] && typeof item.payload[0] === 'object') {
+              order = Object.keys(item.payload[0]);
+            }
+
+            existingList.push({
+              id: item.id || ('fav_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5)),
+              api: item.api || '',
+              name: item.name || (item.api ? `API: ${item.api}` : 'Custom Preset'),
+              time: item.time || new Date().toLocaleTimeString(),
+              note: item.note || '',
+              payload: item.payload,
+              param_order: order || []
+            });
+            addedCount++;
+          }
+        }
+      });
+
+      await chrome.storage.local.set({ [storeKey]: existingList });
+      await renderFavoritesList();
+      triggerToast(`Imported ${addedCount} new presets (duplicates skipped)`);
+    } catch (err) {
+      console.error('Import presets error:', err);
+      triggerToast('Failed to read presets file');
+    }
+  };
 
   const discussBtn = document.getElementById('btn-discuss-toggle');
   const discussMenu = document.getElementById('discuss-menu');
@@ -1633,11 +1724,11 @@ async function renderFavoritesList() {
         const targetCard = cards.find(c => c.textContent.includes(matchedOfficial.api));
         if (targetCard) {
           switchOfficialApi(matchedOfficial, targetCard).then(() => {
-            loadPresetPayloadIntoForm(item.payload[0]);
+            loadPresetPayloadIntoForm(item.payload[0], item.param_order);
           });
         }
       } else {
-        switchToCustomMode(item.api, item.payload[0]);
+        switchToCustomMode(item.api, item.payload[0], item.param_order);
       }
       closeModal('modal-favorites');
       triggerToast(`Loaded preset for ${item.api}`);
@@ -1655,10 +1746,17 @@ async function renderFavoritesList() {
   });
 }
 
-async function loadPresetPayloadIntoForm(payloadObj) {
+// 严格按照 paramOrder 顺序载入参数
+async function loadPresetPayloadIntoForm(payloadObj, paramOrder = null) {
   const container = document.getElementById('params-container');
   container.innerHTML = '';
-  for (const [k, v] of Object.entries(payloadObj)) {
+
+  const keys = Array.isArray(paramOrder) && paramOrder.length > 0 
+    ? paramOrder.filter(k => payloadObj.hasOwnProperty(k))
+    : Object.keys(payloadObj);
+
+  for (const k of keys) {
+    const v = payloadObj[k];
     const poolDef = await fetchParamDefinition(k) || {};
     const fieldType = poolDef.type || (Array.isArray(v) ? 'array' : 'string');
     addParamRow(k, v, poolDef.description || 'Preset parameter', !poolDef.description, fieldType);

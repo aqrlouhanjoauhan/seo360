@@ -25,14 +25,6 @@
         </div>
         <div id="dynamic-api-container"></div>
       </div>
-
-      <div class="sidebar-footer">
-        <div class="feedback-hint">Need more endpoints?</div>
-        <div class="copy-email-box" id="btn-copy-email" title="Click to copy email">
-          <span class="email-text">iansilas@proton.me</span>
-          <span class="copy-icon">📋</span>
-        </div>
-      </div>
     </aside>
 
     <!-- Right Main Console -->
@@ -68,7 +60,6 @@
             <h2>Request Parameters</h2>
             <span class="hint">Press <strong>Enter</strong> to jump or auto-create fields.</span>
           </div>
-          <button id="btn-add-field" class="btn btn-outline btn-sm">+ Add Parameter</button>
         </div>
 
         <div class="params-table">
@@ -83,11 +74,14 @@
         </div>
 
         <div class="params-submit-bar">
-          <button id="btn-save-favorite" class="btn btn-outline" title="Save current endpoint & payload">Save Preset</button>
-          <button id="btn-send-request" class="btn btn-solid">
-            <span class="btn-spinner hidden" id="send-spinner"></span>
-            <span id="send-btn-text">Send Request</span>
-          </button>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <button id="btn-add-field" class="btn btn-outline">+ Add Parameter</button>
+			<button id="btn-save-favorite" class="btn btn-outline" title="Save current endpoint & payload">Save Preset</button>
+            <button id="btn-send-request" class="btn btn-solid">
+              <span class="btn-spinner hidden" id="send-spinner"></span>
+              <span id="send-btn-text">Send Request</span>
+            </button>
+          </div>
         </div>
       </section>
 
@@ -173,7 +167,12 @@
   <div id="modal-favorites" class="modal-layer hidden">
     <div class="modal-window modal-wide">
       <div class="modal-head-line">
-        <h3>Saved Presets</h3>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <h3 style="margin: 0;">Saved Presets</h3>
+          <button id="btn-import-presets" class="btn btn-outline btn-sm" title="Import presets file">📥 Import</button>
+          <button id="btn-export-presets" class="btn btn-outline btn-sm" title="Export presets file">📤 Export</button>
+          <input type="file" id="file-import-presets" accept=".json,application/json" class="hidden">
+        </div>
         <button id="btn-close-fav" class="close-x">&times;</button>
       </div>
       <p class="modal-sub">Presets retain endpoint path and parameters across all modes.</p>
