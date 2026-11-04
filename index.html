@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SEO360 — Free Visual DataForSEO API Client &amp; Lightweight SEO Tools</title>
-  <meta name="description" content="Explore SEO360 and lightweight SEO Chrome extensions powered by DataForSEO APIs. Bring Your Own Key (BYOK), test live SERP APIs, discover keyword ideas, inspect backlink profiles, and export CSVs with zero monthly lock-in.">
+  <title>SEO360: DataForSEO Free No-Code API Test Tool</title>
+  <meta name="description" content="Free visual console & universal API tester for DataForSEO. Debug endpoints, inspect JSON trees, export CSV & generate code without monthly fees.">
   <meta name="google-site-verification" content="hhfNWwv3vHN8Wuo2nIa4goAz-KsXEpvYdK_1b4RcwQA" />
   
   <!-- Native SVG Favicon -->
@@ -188,10 +188,10 @@
     }
 
     .hero h1 {
-      font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+      font-size: clamp(2.2rem, 4.5vw, 3.2rem);
       font-weight: 800;
       letter-spacing: -0.03em;
-      line-height: 1.2;
+      line-height: 1.25;
       margin-bottom: 18px;
     }
 
@@ -277,19 +277,6 @@
       background: linear-gradient(180deg, rgba(16, 185, 129, 0.04) 0%, rgba(255, 255, 255, 0.02) 100%);
     }
 
-    .tool-icon-box {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
-      flex-shrink: 0;
-      border: 1px solid var(--card-border);
-      background: rgba(255, 255, 255, 0.04);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--accent);
-    }
-
     .tool-icon-img {
       width: 48px;
       height: 48px;
@@ -366,7 +353,7 @@
       display: none;
     }
 
-    /* DataForSEO Authority Section */
+    /* Authority Section */
     .authority-section {
       padding: 56px 0;
       border-top: 1px solid var(--card-border);
@@ -450,7 +437,7 @@
       color: var(--text-muted);
     }
 
-    /* Core Architectural Principles */
+    /* Core Principles Section */
     .principles-section {
       padding: 48px 0;
       border-top: 1px solid var(--card-border);
@@ -504,19 +491,15 @@
       gap: 20px;
     }
 
-    .footer-links button, .footer-links a {
-      background: none;
-      border: none;
+    .footer-links a {
       color: var(--text-muted);
       text-decoration: none;
       font-size: 0.85rem;
       font-family: inherit;
-      cursor: pointer;
-      padding: 0;
       transition: color 0.2s;
     }
 
-    .footer-links button:hover, .footer-links a:hover {
+    .footer-links a:hover {
       color: var(--text-main);
     }
 
@@ -527,87 +510,6 @@
       font-size: 0.78rem;
       color: #64748b;
       line-height: 1.5;
-    }
-
-    /* Modal */
-    .modal-backdrop {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.78);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      z-index: 999;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-
-    .modal-backdrop.active {
-      display: flex;
-    }
-
-    .modal-box {
-      background: #11131a;
-      border: 1px solid var(--card-border);
-      border-radius: 14px;
-      max-width: 580px;
-      width: 100%;
-      max-height: 85vh;
-      overflow-y: auto;
-      padding: 30px;
-      position: relative;
-      text-align: left;
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 18px;
-      right: 18px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--card-border);
-      color: var(--text-muted);
-      width: 28px;
-      height: 28px;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-      cursor: pointer;
-    }
-
-    .modal-close:hover {
-      color: #fff;
-      background: rgba(255, 255, 255, 0.1);
-    }
-
-    .modal-box h3 {
-      font-size: 1.25rem;
-      color: #fff;
-      margin-bottom: 14px;
-      font-weight: 700;
-    }
-
-    .modal-box p {
-      color: var(--text-muted);
-      font-size: 0.88rem;
-      margin-bottom: 12px;
-      line-height: 1.6;
-    }
-
-    .email-box {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--card-border);
-      padding: 10px 14px;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 14px;
-      font-family: ui-monospace, monospace;
-      font-size: 0.9rem;
-      color: #38bdf8;
     }
 
     @media (max-width: 768px) {
@@ -637,12 +539,12 @@
             <path d="M10.5 8V13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
           </svg>
         </div>
-        <span>SEO360 Hub</span>
+        <span>SEO360</span>
       </a>
       <div class="nav-links">
-        <a href="#directory" class="nav-item">Extensions Directory</a>
-        <a href="#dataforseo-advantage" class="nav-item">Why DataForSEO?</a>
-        <a href="#architecture" class="nav-item">BYOK Architecture</a>
+        <a href="#directory" class="nav-item">Extensions</a>
+        <a href="#why-raw-data" class="nav-item">Why DataForSEO?</a>
+        <a href="#how-it-works" class="nav-item">How It Works</a>
       </div>
     </div>
   </header>
@@ -652,16 +554,16 @@
     <div class="container hero">
       <div class="badge">
         <span class="badge-dot"></span>
-        Bring Your Own Key (BYOK) • Zero Monthly Markups
+        Free &amp; Open Source • Bring Your Own Key
       </div>
 
       <h1>
-        Professional SEO Tools &amp; API Clients.<br>
-        <span>Direct from DataForSEO Infrastructure.</span>
+        No-Code DataForSEO API Tester.<br>
+        <span>Test endpoints right in your browser.</span>
       </h1>
 
       <p>
-        Bypass bloated monthly subscriptions. Access enterprise-grade Google SERP rank trackers, keyword search volume estimators, and competitor intelligence tools straight into your browser with your own API credentials.
+        Stop writing curl scripts just to see what an API returns. Enter your parameters, inspect real JSON trees, export data to CSV, or grab copy-paste code snippets in one click.
       </p>
     </div>
 
@@ -673,24 +575,24 @@
           <circle cx="11" cy="11" r="8"></circle>
           <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
-        <input type="text" id="toolSearch" class="search-input" placeholder="Filter tools by keyword, API endpoint, or functionality..." autocomplete="off">
+        <input type="text" id="toolSearch" class="search-input" placeholder="Search tools or endpoints..." autocomplete="off">
       </div>
 
-      <!-- Static HTML Tools List -->
+      <!-- Tools List -->
       <div id="toolsList" class="tools-scroll-box">
 
         <!-- Tool 1: SEO360 (Flagship Console) -->
-        <div class="tool-item featured" id="tool-seo360" data-tags="seo360 dataforseo api client serp tester visual debugger keyword ideas backlinks cpc json tree export csv python nodejs snippet byok">
+        <div class="tool-item featured" id="tool-seo360" data-tags="seo360 dataforseo api client test tool tester serp debugger keyword ideas backlinks cpc json tree export csv python nodejs snippet byok">
           <div class="tool-left">
-            <img src="https://lh3.googleusercontent.com/GHIpRJ2xMxJ3SssvChRks2Kd-vTMbR0xKupoV823dclCtB15cHVnRBPniknz9MZ3N4elSOc-8YVSsZGhOGaYzLlU=s120" alt="Competitor Keyword Finder Extension" class="tool-icon-img" width="48" height="48" loading="lazy">
+            <img src="https://lh3.googleusercontent.com/GHIpRJ2xMxJ3SssvChRks2Kd-vTMbR0xKupoV823dclCtB15cHVnRBPniknz9MZ3N4elSOc-8YVSsZGhOGaYzLlU=s120" alt="SEO360 Extension Icon" class="tool-icon-img" width="48" height="48" loading="lazy">
             <div class="tool-info">
               <h3>
                 <a href="https://chromewebstore.google.com/detail/mpphhakiifalmlkphalklimjfkhkpbmp" target="_blank" rel="noopener">
-                  SEO360 — Visual DataForSEO API Client &amp; SERP Tester
+                  SEO360: DataForSEO Free No-Code API Test Tool
                 </a>
-                <span class="badge-status flagship">Flagship Console</span>
+                <span class="badge-status flagship">Main Tool</span>
               </h3>
-              <p>The universal visual workbench for DataForSEO. Debug ANY Live API endpoint—including Google SERP rankings, Keyword Search Volume, Competitor Ranked Keywords, and Backlink Profile summaries. Features interactive parameter builders, foldable JSON tree viewers, one-click CSV export, and multi-language code generators (Python, Node.js, cURL).</p>
+              <p>Visual testing workbench for DataForSEO. Test live Google SERPs, search volume, competitor keywords, or any custom API endpoint. View response JSON trees, render nested tables, export clean CSV files, and generate runnable code (Python, Node.js, cURL).</p>
             </div>
           </div>
           <div class="tool-actions">
@@ -709,9 +611,9 @@
         </div>
         
         <!-- Tool 2: Competitor Keyword Finder (Active) -->
-        <div class="tool-item" id="tool-ckfinder" data-tags="competitor keywords blue ocean traffic ranking serp dataforseo labs reverse search volume">
+        <div class="tool-item" id="tool-ckfinder" data-tags="competitor keywords traffic ranking serp dataforseo search volume">
           <div class="tool-left">
-            <img src="https://lh3.googleusercontent.com/lCW3TpYdC6LDv8VEDzPvBr1N3ah-fX3zonQR-jm07LOoWwtbMxKcXxHyRLvJuw4spF9kTSBkgeRZpng5R0y4hkaA7aw=s120" alt="Competitor Keyword Finder Extension" class="tool-icon-img" width="48" height="48" loading="lazy">
+            <img src="https://lh3.googleusercontent.com/lCW3TpYdC6LDv8VEDzPvBr1N3ah-fX3zonQR-jm07LOoWwtbMxKcXxHyRLvJuw4spF9kTSBkgeRZpng5R0y4hkaA7aw=s120" alt="Competitor Keyword Finder Icon" class="tool-icon-img" width="48" height="48" loading="lazy">
             <div class="tool-info">
               <h3>
                 <a href="https://chromewebstore.google.com/detail/competitor-keyword-finder/mmcajkhbkkhmcbaabeajefkdaciohodc" target="_blank" rel="noopener">
@@ -719,7 +621,7 @@
                 </a>
                 <span class="badge-status">Active</span>
               </h3>
-              <p>Reverse-engineer competitor domains to uncover high-traffic ranking keywords and lucrative long-tail search terms. Built-in 0–100 Blue Ocean opportunity scoring, automated search intent classification, and instant CSV datasets across 9 Google international locations.</p>
+              <p>Enter any domain to get ranking keywords and search volume. Includes intent tagging, opportunity metrics, and instant CSV export across Google international regions.</p>
             </div>
           </div>
           <div class="tool-actions">
@@ -738,9 +640,9 @@
         </div>
 
         <!-- Tool 3: Compare 2 Websites SEO (Active) -->
-        <div class="tool-item" id="tool-compare" data-tags="compare seo content gap competitor rankings keywords side by side on-page diff audit">
+        <div class="tool-item" id="tool-compare" data-tags="compare seo competitor rankings keywords on-page">
           <div class="tool-left">
-            <img src="https://lh3.googleusercontent.com/nlj52G7AqJnriE98K0u2QOWkrjQmm2mV6-KWoBjRDk0JhUzKI3R4v6nrbLS8UvdvmOZaE9IZ7LuJ7UE3P6_q8JY=s120" alt="Compare 2 Websites SEO Extension" class="tool-icon-img" width="48" height="48" loading="lazy">
+            <img src="https://lh3.googleusercontent.com/nlj52G7AqJnriE98K0u2QOWkrjQmm2mV6-KWoBjRDk0JhUzKI3R4v6nrbLS8UvdvmOZaE9IZ7LuJ7UE3P6_q8JY=s120" alt="Compare 2 Websites SEO Icon" class="tool-icon-img" width="48" height="48" loading="lazy">
             <div class="tool-info">
               <h3>
                 <a href="https://chromewebstore.google.com/detail/compare-2-websites-seo-co/mfoehhkaioagppbbbknhehglkeidncco" target="_blank" rel="noopener">
@@ -748,7 +650,7 @@
                 </a>
                 <span class="badge-status">Active</span>
               </h3>
-              <p>Side-by-side SEO comparison tool. Inspect on-page DOM structures, word count variations, and heading hierarchies directly in the browser, paired with head-to-head Google ranking positions and organic keyword gaps powered by real-time SERP scrapers.</p>
+              <p>Compare two websites head-to-head. Inspect headings and content differences on-page, paired with live keyword rankings and SERP position comparisons.</p>
             </div>
           </div>
           <div class="tool-actions">
@@ -768,70 +670,69 @@
 
       </div>
 
-      <div id="noResults" class="no-results">No matching SEO tools found.</div>
+      <div id="noResults" class="no-results">No matching tools found.</div>
     </div>
 
     <!-- DataForSEO Authority Section -->
-    <div id="dataforseo-advantage" class="container authority-section">
+    <div id="why-raw-data" class="container authority-section">
       <div class="section-title">
-        <h2>Why Build on DataForSEO?</h2>
-        <p>The silent backbone powering modern SEO SaaS platforms, marketing agencies, and algorithmic research globally.</p>
+        <h2>Why Use Raw Provider Data?</h2>
+        <p>Direct data from the source, without expensive SaaS wrappers or monthly markups.</p>
       </div>
 
       <div class="authority-grid">
         <div class="authority-card">
-          <span class="icon-tag">🌐</span>
-          <h4>Industry-Standard Data Infrastructure</h4>
-          <p>DataForSEO is the premier data provider trusted by hundreds of top-tier marketing platforms, enterprise SEO suites, and Fortune 500 data teams. Instead of brittle web scrapers that break constantly, DataForSEO maintains industrial-grade crawling clusters across 75+ global locations.</p>
+          <span class="icon-tag">💰</span>
+          <h4>Pay Per Request, Not Per Month</h4>
+          <p>Traditional SEO platforms charge $100–$400 every month whether you use them or not. With DataForSEO APIs, you only pay for the exact searches you run (fractions of a cent per request).</p>
         </div>
 
         <div class="authority-card">
           <span class="icon-tag">⚡</span>
-          <h4>True Live &amp; Real-Time Execution</h4>
-          <p>Unlike legacy data warehouses that serve stale keyword metrics cached months ago, DataForSEO's Live endpoints query live Google search engines and Google Ads databases on demand, returning real-time rankings, genuine CPC bids, and fresh search intent metrics.</p>
+          <h4>Live Google Data</h4>
+          <p>Get real-time SERP rankings, accurate search volumes, and current CPC figures straight from search engine results, instead of outdated cached databases.</p>
         </div>
 
         <div class="authority-card">
-          <span class="icon-tag">💎</span>
-          <h4>Fraction of Legacy SaaS Costs</h4>
-          <p>Traditional SEO platforms charge $120–$500 every single month regardless of whether you run 10 searches or 1,000. DataForSEO operates on pure pay-per-request micropayments ($0.002 to $0.01 per query), cutting data acquisition costs by over 90%.</p>
+          <span class="icon-tag">🧩</span>
+          <h4>No Code Required</h4>
+          <p>You don't need to write Python scripts, configure Postman, or parse raw command-line curl responses. The extension handles formatting and displays data in plain view.</p>
         </div>
       </div>
 
-      <!-- DataForSEO Banner para iti dinamiko a referral link -->
+      <!-- Referral Link Banner -->
       <div class="authority-banner">
         <div class="authority-banner-text">
-          <h3>Need an official DataForSEO API account?</h3>
-          <p>Sign up directly with DataForSEO to receive sandbox test credits and full API access credentials.</p>
+          <h3>Need a DataForSEO API Key?</h3>
+          <p>Sign up directly with DataForSEO to get your API login credentials and free test credits.</p>
         </div>
-        <!-- 保持 href="#"，加载时由 JS 自动从 base.json 注入专属推广链接 -->
         <a href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary dataforseo-ref-link" id="btn-dataforseo-cta">
-          Sign up with DataForSEO ↗
+          Get DataForSEO API Key ↗
         </a>
       </div>
     </div>
 
-    <!-- BYOK Architecture Standards -->
-    <div id="architecture" class="container principles-section">
+    <!-- How It Works / Security Standards -->
+    <div id="how-it-works" class="container principles-section">
       <div class="section-title">
-        <h2>BYOK (Bring Your Own Key) Security</h2>
-        <p>Engineered for complete developer autonomy, zero vendor lock-in, and uncompromising data privacy.</p>
+        <h2>How It Works</h2>
+        <p>Simple, private, and runs entirely in your own browser.</p>
       </div>
 
       <div class="grid-3">
         <div class="principle-card">
-          <h4>No Account or Registration Required</h4>
-          <p>You never register an account with us. Simply enter your official DataForSEO API Login and Password directly into the extension popup. Start running live queries immediately.</p>
+          <h4>No Account Needed</h4>
+          <p>There is no sign-up or registration for this extension. Just install it, enter your DataForSEO credentials, and start testing.</p>
         </div>
 
         <div class="principle-card">
-          <h4>Zero Server Intermediaries</h4>
-          <p>All API queries are initiated locally from your browser sandbox directly to <code>https://api.dataforseo.com/v3/</code> via HTTPS Basic Auth. Your credentials and search histories are never routed through or stored on third-party backend servers.</p>
+          <h4>Direct Browser Requests</h4>
+          <p>Your API key never touches any middleman server. Requests go directly from your Chrome browser to DataForSEO using official HTTPS Basic Auth.</p>
         </div>
 
         <div class="principle-card">
-          <h4>Direct Pay-As-You-Go Billing</h4>
-          <p>No markup, no commission fees, and no recurring credit cards on our site. Your API costs are deducted strictly from your own DataForSEO account at official wholesale rates.</p>
+          <h4>Export &amp; Share</h4>
+          <p>Download clean CSV tables or save common queries as Presets. You can import and export your presets to collaborate with team members seamlessly.</p>
         </div>
       </div>
     </div>
@@ -840,43 +741,21 @@
   <!-- Footer -->
   <footer>
     <div class="container footer-inner">
-      <!-- 动态年份容器 -->
       <div>&copy; <span id="currentYear"></span> SEO360. All rights reserved.</div>
       <div class="footer-links">
         <a href="https://github.com/aqrlouhanjoauhan/seo360" target="_blank" rel="noopener noreferrer">GitHub</a>
-        <a href="/privacy.html" style="color:var(--text-muted);text-decoration:none;font-size:0.85rem;">Privacy Policy</a>
-        <button type="button" onclick="openModal('supportModal')">Contact Support</button>
+        <a href="/privacy.html">Privacy Policy</a>
       </div>
     </div>
     <div class="container">
       <div class="footer-disclaimer">
-        Disclaimer: SEO360 is an independent development utility and is not affiliated, associated, authorized, endorsed by, or in any way officially connected with Google LLC or DataForSEO. Google is a trademark of Google LLC. DataForSEO is a trademark of its respective owner.
+        Disclaimer: SEO360 is an independent development utility and is not affiliated, associated, authorized, endorsed by, or in any way officially connected with Google LLC or DataForSEO.
       </div>
     </div>
   </footer>
 
-  <!-- Contact Support Modal -->
-  <div id="supportModal" class="modal-backdrop" onclick="closeOnBackdrop(event, 'supportModal')">
-    <div class="modal-box">
-      <button class="modal-close" onclick="closeModal('supportModal')">&times;</button>
-      <h3>Developer Contact &amp; Inquiries</h3>
-      <p>For custom endpoint integration requests, bug reports, or affiliate collaboration questions, contact the development team directly:</p>
-      <div class="email-box">
-        <span>iansilas@proton.me</span>
-        <button class="btn btn-secondary" style="padding: 4px 10px; font-size: 0.75rem;" onclick="copyEmail(this)">Copy</button>
-      </div>
-      <div style="margin-top: 16px;">
-        <a href="mailto:iansilas@proton.me" class="btn btn-primary" style="width: 100%; text-align: center;">
-          Send Email
-        </a>
-      </div>
-    </div>
-  </div>
-
   <script>
-    // =========================================================================
-    // 1. 动态生成版权年份
-    // =========================================================================
+    // 1. 动态生成年份
     function initDynamicYear() {
       const yearEl = document.getElementById('currentYear');
       if (yearEl) {
@@ -884,9 +763,7 @@
       }
     }
 
-    // =========================================================================
-    // 2. 实时搜索过滤
-    // =========================================================================
+    // 2. 实时过滤工具列表
     const searchInput = document.getElementById('toolSearch');
     const toolItems = document.querySelectorAll('.tool-item');
     const emptyState = document.getElementById('noResults');
@@ -920,9 +797,7 @@
       filterTools(toolParam);
     }
 
-    // =========================================================================
-    // 3. 动态从 ./dataforseo/base.json 注入推广返利链接与社区外链
-    // =========================================================================
+    // 3. 动态注入推广链接与社区链接
     let cachedAffiliateUrl = '';
 
     async function initDataForSeoBaseConfig() {
@@ -935,7 +810,7 @@
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const data = await res.json();
 
-        // 1. 读取并注入官方返利链接
+        // 注入返利推广链接
         cachedAffiliateUrl = data.affiliate_url || data.affiliate_link || '';
         if (cachedAffiliateUrl) {
           const links = document.querySelectorAll('.dataforseo-ref-link');
@@ -944,7 +819,7 @@
           });
         }
 
-        // 2. 动态读取并渲染社区链接到页脚
+        // 动态读取并插入社区外链
         if (Array.isArray(data.community_links) && data.community_links.length > 0) {
           const footerLinks = document.querySelector('.footer-links');
           if (footerLinks) {
@@ -970,7 +845,7 @@
       }
     }
 
-    // 防漏兜底：点击时若尚未拉取完成，实时获取并跳转
+    // 点击返利链接的即时兜底
     document.addEventListener('click', (e) => {
       const target = e.target.closest('.dataforseo-ref-link');
       if (target) {
@@ -993,42 +868,6 @@
       }
     });
 
-    // =========================================================================
-    // 4. 模态框与工具控制
-    // =========================================================================
-    function openModal(id) {
-      document.getElementById(id).classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal(id) {
-      document.getElementById(id).classList.remove('active');
-      document.body.style.overflow = 'auto';
-    }
-
-    function closeOnBackdrop(e, id) {
-      if (e.target.id === id) closeModal(id);
-    }
-
-    function copyEmail(btn) {
-      navigator.clipboard.writeText('iansilas@proton.me').then(() => {
-        const oldText = btn.textContent;
-        btn.textContent = 'Copied';
-        btn.style.color = '#10b981';
-        setTimeout(() => {
-          btn.textContent = oldText;
-          btn.style.color = '';
-        }, 1800);
-      });
-    }
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        closeModal('supportModal');
-      }
-    });
-
-    // 页面加载完成后统一初始化
     document.addEventListener('DOMContentLoaded', () => {
       initDynamicYear();
       initDataForSeoBaseConfig();
