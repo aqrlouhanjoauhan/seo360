@@ -142,15 +142,21 @@
   <div id="modal-creds" class="modal-layer hidden">
     <div class="modal-window">
       <h3>DataForSEO API Credentials</h3>
-      <p class="modal-sub">Credentials are required to execute API calls and fetch your account balance.</p>
+      <p class="modal-sub">
+        Stored securely in your local browser storage. No middleman servers.
+      </p>
 
       <div class="input-block">
-        <label>API Login (Your registration email)</label>
+        <label>API Login (Your DataForSEO email)</label>
         <input type="text" id="cfg-api-login" placeholder="e.g. name@company.com">
       </div>
+      
       <div class="input-block">
-        <label>API Password (API key token)</label>
-        <input type="password" id="cfg-api-pass" placeholder="Your API access token">
+        <label>API Secret Key / Token</label>
+        <input type="password" id="cfg-api-pass" placeholder="Paste your API key or token">
+        <div style="margin-top: 6px; font-size: 11px; color: #94a3b8; line-height: 1.4;">
+          💡 <strong>Tip:</strong> You can safely test using DataForSEO's free $1 trial credit. You can regenerate or delete this API key in your official dashboard at any time.
+        </div>
       </div>
 
       <div class="modal-foot">

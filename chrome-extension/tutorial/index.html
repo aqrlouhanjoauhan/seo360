@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Setup Guide - SEO360</title>
   <link rel="stylesheet" href="tutorial.css">
 </head>
@@ -14,45 +15,45 @@
       
       <div class="intro-card">
         <p class="intro-text">
-          <strong>DataForSEO</strong> is the underlying data infrastructure powering top-tier SEO software, rank trackers, and analytics tools globally. By connecting directly, you skip third-party markups and access enterprise data at wholesale rates.
+          <strong>DataForSEO</strong> is the wholesale data infrastructure behind top SEO tools. With SEO360, your browser talks directly to their official APIs. No middleman servers, no markups.
         </p>
       </div>
     </header>
 
     <!-- 卡片流 (Feed 列表) -->
     <main class="feed-list">
-      <!-- 步骤 1：大卡片直达数据源 -->
-	  <article class="feed-card">
-	    <div class="card-header">
-	  	<div class="step-badge">1</div>
-	  	<div class="card-title-box">
-	  	  <h2>Create Your Account</h2>
-	  	  <p>Register directly on the official DataForSEO platform</p>
-	  	</div>
-	    </div>
-	    <div class="card-body">
-	  	<p>Sign up to get started. New accounts receive complimentary test credits to explore the APIs.</p>
-	    </div>
-	    <div class="card-footer">
-	  	<button id="btn-portal-action" class="btn btn-primary">Go to DataForSEO ↗</button>
-	    </div>
-	  </article>
+      <!-- 步骤 1：免费 $1 额度与注册 -->
+      <article class="feed-card">
+        <div class="card-header">
+          <div class="step-badge">1</div>
+          <div class="card-title-box">
+            <h2>Get Your Free $1 Test Credit</h2>
+            <p>Register directly on the official DataForSEO platform</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <p>Sign up directly with DataForSEO. Every new account receives a <strong>complimentary $1 test credit</strong>. You can run hundreds of live SERP queries without entering any payment details or credit cards.</p>
+        </div>
+        <div class="card-footer">
+          <button id="btn-portal-action" class="btn btn-primary">Go to DataForSEO &amp; Claim $1 Credit ↗</button>
+        </div>
+      </article>
 
-      <!-- 步骤 2：大卡片获取凭据（附带点击放大图片） -->
+      <!-- 步骤 2：获取 API 密钥 -->
       <article class="feed-card">
         <div class="card-header">
           <div class="step-badge">2</div>
           <div class="card-title-box">
             <h2>Get Your API Credentials</h2>
-            <p>Locate your Login Email and API Password token</p>
+            <p>Locate your Login Email and API Secret token</p>
           </div>
         </div>
         <div class="card-body">
-          <p>Once logged in, open the left sidebar and go to <strong>Dashboard → API Access</strong>:</p>
+          <p>Log in, navigate to <strong>Dashboard → API Access</strong> in the left sidebar, and copy your credentials:</p>
           
           <ul class="credential-info">
-            <li><strong>API Login:</strong> Your account email</li>
-            <li><strong>API Password:</strong> The generated API key token (click copy)</li>
+            <li><strong>API Login:</strong> Your registration email</li>
+            <li><strong>API Secret / Password:</strong> The generated API key token</li>
           </ul>
 
           <!-- 可点击放大的图片预览容器 -->
@@ -65,23 +66,47 @@
                 <line x1="11" y1="8" x2="11" y2="14"></line>
                 <line x1="8" y1="11" x2="14" y2="11"></line>
               </svg>
-              Click to view full image
+              Click to view full screenshot
             </div>
           </div>
         </div>
       </article>
+	  
+	  <!-- 官方 AI 助手：解决密钥安全与费用疑问 -->
+      <article class="feed-card" style="border-left: 3px solid #38bdf8;">
+        <div class="card-header">
+          <div class="step-badge" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8;">🤖</div>
+          <div class="card-title-box">
+            <h2>Have Questions? Ask DataForSEO Official AI</h2>
+            <p>Get instant answers about key security and costs</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <p>If you have any doubts about <strong>costs</strong>, <strong>key security</strong>, or <strong>how to reset your key</strong> after testing, you can ask DataForSEO's official AI assistant directly:</p>
+          <ul class="credential-info" style="margin-top: 8px;">
+            <li>"If I add a card, will I be charged every month automatically?"</li>
+            <li>"How can I reset or delete my API key?"</li>
+            <li>"What happens when my free $1 credit runs out?"</li>
+          </ul>
+        </div>
+        <div class="card-footer">
+          <a href="https://dataforseo.com/help-center" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+            Ask DataForSEO Official AI ↗
+          </a>
+        </div>
+      </article>
 
-      <!-- 步骤 3：大卡片连接控制台 -->
+      <!-- 步骤 3：连接控制台 -->
       <article class="feed-card">
         <div class="card-header">
           <div class="step-badge">3</div>
           <div class="card-title-box">
-            <h2>Launch & Debug</h2>
-            <p>Connect your keys and start querying SEO endpoints</p>
+            <h2>Connect &amp; Start Testing</h2>
+            <p>Paste keys into your local extension and run queries</p>
           </div>
         </div>
         <div class="card-body">
-          <p>Open the SEO360 Console, paste both credentials into the left sidebar, and click <strong>Save Credentials</strong>.</p>
+          <p>Paste your credentials into the SEO360 console. Select any endpoint (e.g., Google Organic SERP), tweak parameters, and inspect live responses.</p>
         </div>
         <div class="card-footer">
           <button id="btn-open-console" class="btn btn-secondary">Launch Console</button>
