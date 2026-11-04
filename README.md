@@ -1,14 +1,19 @@
-# SEO360 — Visual DataForSEO Client
+# SEO360: DataForSEO Free No-Code API Test Tool
 
-A free, open-source Chrome extension that provides a clean graphical interface for the DataForSEO API. Query real-time Google search rankings and keyword metrics directly from your browser—no code required.
+> 🔗 **Quick Links:**  
+> • **Install to Chrome**: [Chrome Web Store](https://chromewebstore.google.com/detail/mpphhakiifalmlkphalklimjfkhkpbmp)  
+> • **Get API Credentials**: [DataForSEO Sign-up](https://seo360.pages.dev/dataforseo)
+
+A free, open-source Chrome extension for DataForSEO. Test live Google search rankings, search volumes, and custom endpoints right in your browser—no coding or terminal required.
 
 ---
 
-## Key Highlights
+## Why Use It?
 
-- **Direct Wholesale Pricing**: Connect straight to upstream search data endpoints. Pay only fractions of a cent ($0.02–$0.04) per query instead of paying $100+/month SaaS subscriptions.
-- **Client-Side Security**: All API keys remain strictly inside your browser's local storage. Zero telemetry, zero external servers.
-- **Workflow & AI Ready**: View structured ranking data in tables, inspect raw JSON, or export clean CSV files ready for prompt analysis in ChatGPT or Claude.
+- **No Code Required**: Build API requests by selecting options instead of writing curl commands or Python scripts.
+- **Pay Per Request**: Pay only wholesale provider rates (fractions of a cent per search) instead of expensive monthly SaaS subscriptions.
+- **Direct & Private**: Your API keys stay in your browser. All requests go directly to DataForSEO with no middleman server.
+- **Inspect & Export**: View responses in a clean JSON tree, preview nested data in tables, export raw query data, and save presets for team sharing.
 
 ---
 
@@ -22,27 +27,29 @@ A free, open-source Chrome extension that provides a clean graphical interface f
 
 ## Quick Setup
 
-### 1. Get API Credentials
-SEO360 queries the official search endpoints directly. You will need your own account credentials:
-👉 **[Sign up for DataForSEO & Get API Keys](https://seo360.pages.dev/dataforseo)**
+### 1. Install Extension
+Add the extension to Chrome via the link at the top and pin it to your toolbar.
 
-### 2. Install Extension
+*(Or run from source: clone this repo, open `chrome://extensions/`, enable **Developer mode**, and click **Load unpacked**).*
 
-- **Chrome Web Store (Recommended)**:  
-  Install via the **[SEO360 Web Store Page](https://chromewebstore.google.com/detail/mpphhakiifalmlkphalklimjfkhkpbmp)** and pin it to your toolbar.
-  
-- **From Source**:  
-  Clone this repo, open `chrome://extensions/`, enable **Developer mode**, and click **Load unpacked** targeting the `chrome-extension` directory.
+### 2. Enter Credentials
+Paste your DataForSEO Login and Password into the extension credentials window.
 
-### 3. Query
-Open the extension, enter your API login, set your target keyword/domain, and run the request.
+### 3. Run Your Test
+Select an endpoint (or enter a custom path), adjust your target keyword/country, and click **Send Request**.
+
+---
+
+## Presets & Team Collaboration
+
+- **Save Presets**: Save custom query parameters with optional notes.
+- **Import & Export**: Export your presets to share with colleagues or backup your workflows with zero duplicate entries.
 
 ---
 
 ## Feedback & Issues
 
-- Submit a GitHub Issue for bug reports or endpoint requests.
-- **Contact**: `iansilas@proton.me`
+Have an endpoint request or found a bug? Feel free to open a [GitHub Issue](https://github.com/aqrlouhanjoauhan/seo360/issues).
 
 ---
 
