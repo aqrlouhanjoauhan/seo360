@@ -1,4 +1,18 @@
 <!DOCTYPE html>
+<style>
+  body { margin: 0; }
+  .bar {
+    height: 3px;
+    background: #0070f3;
+    animation: p 2s ease-out forwards;
+  }
+  @keyframes p {
+    0% { width: 0; }
+    50% { width: 70%; }
+    100% { width: 95%; }
+  }
+</style>
+<div class="bar"></div>
 <script>
 fetch('base.json')
   .then(r => r.json())
