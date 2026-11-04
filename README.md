@@ -1,10 +1,14 @@
 # SEO360: DataForSEO Free No-Code API Test Tool
 
-> 🔗 **Quick Links:**  
-> • **Install to Chrome**: [Chrome Web Store](https://chromewebstore.google.com/detail/mpphhakiifalmlkphalklimjfkhkpbmp)  
-> • **Get API Credentials**: [DataForSEO Sign-up](https://seo360.pages.dev/dataforseo)
+A free, open-source [Chrome extension](https://chromewebstore.google.com/detail/mpphhakiifalmlkphalklimjfkhkpbmp) to test DataForSEO endpoints with zero code. Inspect Google search rankings, search volumes, and custom API responses right in your browser.
 
-A free, open-source Chrome extension for DataForSEO. Test live Google search rankings, search volumes, and custom endpoints right in your browser—no coding or terminal required.
+---
+
+## 🔒 Test Safely with Free $1 Credit
+
+- **Zero Risk & Zero Cost**: Every new [DataForSEO account](https://seo360.pages.dev/dataforseo) comes with **$1 free testing credit**—you do not even need to enter a credit card to try it out.
+- **Local Storage Only**: Your API credentials remain strictly in your browser. Requests go directly from your machine to official DataForSEO endpoints with no middleman servers.
+- **Change Your Key Anytime**: Once you verify the data, you can immediately reset or revoke your API key inside the official DataForSEO dashboard. You are always in full control.
 
 ---
 
@@ -28,12 +32,12 @@ A free, open-source Chrome extension for DataForSEO. Test live Google search ran
 ## Quick Setup
 
 ### 1. Install Extension
-Add the extension to Chrome via the link at the top and pin it to your toolbar.
+Add the extension to Chrome via the Web Store and pin it to your toolbar.
 
 *(Or run from source: clone this repo, open `chrome://extensions/`, enable **Developer mode**, and click **Load unpacked**).*
 
 ### 2. Enter Credentials
-Paste your DataForSEO Login and Password into the extension credentials window.
+Paste your DataForSEO Login and Password/Token into the extension credentials window.
 
 ### 3. Run Your Test
 Select an endpoint (or enter a custom path), adjust your target keyword/country, and click **Send Request**.
