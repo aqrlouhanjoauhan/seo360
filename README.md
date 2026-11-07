@@ -1,6 +1,6 @@
 # SEO360: DataForSEO Free No-Code API Test Tool
 
-A free, open-source [Chrome extension](https://chromewebstore.google.com/detail/mpphhakiifalmlkphalklimjfkhkpbmp) to test DataForSEO endpoints with zero code. Inspect Google search rankings, search volumes, and custom API responses right in your browser.
+A free, open-source [Chrome extension]([https://chromewebstore.google.com/detail/mpphhakiifalmlkphalklimjfkhkpbmp](https://chromewebstore.google.com/detail/seo360-dataforseo-free-no/mpphhakiifalmlkphalklimjfkhkpbmp)) to test DataForSEO endpoints with zero code. Inspect Google search rankings, search volumes, and custom API responses right in your browser.
 
 ---
 
