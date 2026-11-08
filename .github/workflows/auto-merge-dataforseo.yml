@@ -1,0 +1,73 @@
+name: Auto Merge DataForSEO Configs
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  validate-and-merge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+
+      - name: Security and Scope Verification
+        id: security_check
+        run: |
+          PR_AUTHOR="${{ github.event.pull_request.user.login }}"
+          echo "PR Author: $PR_AUTHOR"
+
+          # 1. Author Whitelist Check
+          TRUSTED_USERS="dataforseo"
+
+          IS_TRUSTED=0
+          for user in $TRUSTED_USERS; do
+            if [ "$PR_AUTHOR" == "$user" ]; then
+              IS_TRUSTED=1
+              break
+            fi
+          done
+
+          if [ $IS_TRUSTED -eq 0 ]; then
+            echo "::warning::Author '$PR_AUTHOR' is not in the trusted list. Skipping auto-merge (manual review required)."
+            exit 1
+          fi
+
+          # 2. File Path and Scope Verification
+          git fetch origin ${{ github.base_ref }}
+          CHANGED_FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD)
+          
+          echo "=== Changed Files ==="
+          echo "$CHANGED_FILES"
+          echo "====================="
+
+          for file in $CHANGED_FILES; do
+            # Policy A: base.json is strictly protected
+            if [ "$file" == "dataforseo/base.json" ]; then
+              echo "::error file=dataforseo/base.json::Modifications to core architecture file 'dataforseo/base.json' are strictly prohibited."
+              exit 1
+            fi
+
+            # Policy B: All modifications must remain within dataforseo/ directory
+            if [[ "$file" != dataforseo/* ]]; then
+              echo "::error::File '$file' is outside the permitted 'dataforseo/' directory."
+              exit 1
+            fi
+          done
+
+          echo "Verification passed: Changes are confined to 'dataforseo/' and 'base.json' is untouched."
+
+      - name: Approve and Auto-Merge PR
+        run: |
+          gh pr review "$PR_URL" --approve --body "Automated review: Configuration verified. Changes confined to 'dataforseo/' directory. Auto-merging."
+          gh pr merge "$PR_URL" --auto --squash
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
