@@ -249,7 +249,7 @@ async function switchOfficialApi(apiItem, activeElement) {
 }
 
 // 7. Switch to Custom Mode
-async function switchToCustomMode(initialPath = '', initialPayload = null, paramOrder = null) {
+async function switchToCustomMode(initialPath = '', initialPayloadEntries = null) {
   isCustomMode = true;
   currentApiItem = null;
   
@@ -282,14 +282,13 @@ async function switchToCustomMode(initialPath = '', initialPayload = null, param
   const container = document.getElementById('params-container');
   container.innerHTML = '';
 
-  if (initialPayload && Object.keys(initialPayload).length > 0) {
-    // 严格按顺序载入
-    const keys = Array.isArray(paramOrder) && paramOrder.length > 0 
-      ? paramOrder.filter(k => initialPayload.hasOwnProperty(k))
-      : Object.keys(initialPayload);
+  if (initialPayloadEntries) {
+    // 兼容二维数组 [ [k, v], ... ] 或普通对象 { k: v }
+    const entries = Array.isArray(initialPayloadEntries) 
+      ? initialPayloadEntries 
+      : Object.entries(initialPayloadEntries);
 
-    for (const k of keys) {
-      const v = initialPayload[k];
+    for (const [k, v] of entries) {
       const isArr = Array.isArray(v);
       const def = await fetchParamDefinition(k);
       const desc = def?.description || 'Custom parameter';
@@ -652,27 +651,24 @@ function addArrayItemInputRow(val = '') {
   return row;
 }
 
-// 10. Extract Payload: Intelligent Auto-Parse for JSON Array / Object & Record Ordering
-function extractPayloadWithOrder() {
-  const obj = {};
-  const order = [];
+// 10. Extract Payload: 支持二维数组形式保留次序
+function extractPayloadEntries() {
+  const entries = [];
   document.querySelectorAll('#params-container .params-row').forEach(row => {
     const k = row.querySelector('.field-key-input').value.trim();
     const rawVal = row.querySelector('.field-val-input')?.value.trim() ?? '';
     const type = row.dataset.type;
 
     if (k) {
-      order.push(k);
+      let val;
       if (type === 'array') {
         try {
-          obj[k] = JSON.parse(rawVal);
+          val = JSON.parse(rawVal);
         } catch (_) {
-          obj[k] = rawVal ? [rawVal] : [];
+          val = rawVal ? [rawVal] : [];
         }
       } else {
         let v = rawVal;
-        
-        // Smart JSON Array / Object Detector
         if ((v.startsWith('[') && v.endsWith(']')) || (v.startsWith('{') && v.endsWith('}'))) {
           try {
             v = JSON.parse(v);
@@ -684,16 +680,21 @@ function extractPayloadWithOrder() {
         } else if (!isNaN(v) && v !== '') {
           v = Number(v);
         }
-
-        obj[k] = v;
+        val = v;
       }
+      entries.push([k, val]);
     }
   });
-  return { payload: [obj], order };
+  return entries;
 }
 
 function extractPayload() {
-  return extractPayloadWithOrder().payload;
+  const entries = extractPayloadEntries();
+  const obj = {};
+  entries.forEach(([k, v]) => {
+    obj[k] = v;
+  });
+  return [obj];
 }
 
 // 11. Code Output with Predefined Variables
@@ -1537,22 +1538,18 @@ function setupGlobalEvents() {
     closeModal('modal-save-preset');
   };
 
-  // 严格记录参数的排列顺序
+  // 保存预设：Note 在最前，Payload 采用键值二维数组保留次序，去掉 name/time/param_order
   const doSavePreset = async () => {
     const apiPath = getEffectiveApiPath();
-    const { payload, order } = extractPayloadWithOrder();
+    const payloadEntries = extractPayloadEntries();
     const note = document.getElementById('input-preset-note')?.value.trim() || '';
     const storeKey = 'global_api_presets';
     const list = (await chrome.storage.local.get([storeKey]))[storeKey] || [];
 
     const newPreset = {
-      id: 'fav_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
-      api: apiPath,
-      name: currentApiItem ? (currentApiItem.desc || currentApiItem.api) : `Custom: ${apiPath}`,
-      time: new Date().toLocaleTimeString(),
       note: note,
-      payload: payload,
-      param_order: order // 定格顺序
+      api: apiPath,
+      payload: payloadEntries
     };
 
     list.unshift(newPreset);
@@ -1577,7 +1574,7 @@ function setupGlobalEvents() {
 
   document.getElementById('btn-close-fav').onclick = () => closeModal('modal-favorites');
 
-  // Presets: Import & Export Logic (去重合并，去除 json 字样)
+  // Presets: Import & Export Logic
   const storeKey = 'global_api_presets';
 
   document.getElementById('btn-export-presets').onclick = async () => {
@@ -1615,7 +1612,6 @@ function setupGlobalEvents() {
 
       const existingList = (await chrome.storage.local.get([storeKey]))[storeKey] || [];
       
-      // 去重特征判定：严格比对核心内容 (api + note + payload 内容)
       const getPresetFingerprint = (item) => {
         const api = item.api || '';
         const note = item.note || '';
@@ -1631,21 +1627,19 @@ function setupGlobalEvents() {
           const fp = getPresetFingerprint(item);
           if (!existingFingerprints.has(fp)) {
             existingFingerprints.add(fp);
-            
-            // 兼容可能遗漏的 param_order 字段
-            let order = item.param_order;
-            if (!Array.isArray(order) && item.payload[0] && typeof item.payload[0] === 'object') {
-              order = Object.keys(item.payload[0]);
+
+            // 统一为二维数组结构
+            let formattedPayload = item.payload;
+            if (!Array.isArray(formattedPayload)) {
+              formattedPayload = Object.entries(formattedPayload);
+            } else if (formattedPayload.length > 0 && !Array.isArray(formattedPayload[0]) && typeof formattedPayload[0] === 'object') {
+              formattedPayload = Object.entries(formattedPayload[0]);
             }
 
             existingList.push({
-              id: item.id || ('fav_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5)),
-              api: item.api || '',
-              name: item.name || (item.api ? `API: ${item.api}` : 'Custom Preset'),
-              time: item.time || new Date().toLocaleTimeString(),
               note: item.note || '',
-              payload: item.payload,
-              param_order: order || []
+              api: item.api || '',
+              payload: formattedPayload
             });
             addedCount++;
           }
@@ -1693,7 +1687,7 @@ function setupGlobalEvents() {
   });
 }
 
-// Render Presets List
+// Render Presets List: 修正标题与路径展示逻辑
 async function renderFavoritesList() {
   const storeKey = 'global_api_presets';
   const list = (await chrome.storage.local.get([storeKey]))[storeKey] || [];
@@ -1703,13 +1697,28 @@ async function renderFavoritesList() {
   list.forEach((item, idx) => {
     const row = document.createElement('div');
     row.className = 'fav-row';
-    const noteHtml = item.note ? `<div class="fav-note-badge">${escapeHtml(item.note)}</div>` : '';
+
+    const matchedOfficial = apiRegistry.find(a => a.api === item.api);
+    let topTitle = '';
+
+    // 1. 上方标题判断：有备注优先显示备注；无备注时，官方接口显示描述，自定义接口显示 Custom API
+    if (item.note && item.note.trim()) {
+      topTitle = item.note.trim();
+    } else if (matchedOfficial) {
+      topTitle = Array.isArray(matchedOfficial.desc) 
+        ? matchedOfficial.desc.join(' ') 
+        : (matchedOfficial.desc || matchedOfficial.api);
+    } else {
+      topTitle = 'Custom API';
+    }
+
+    // 2. 下方固定显示接口路径
+    const bottomPath = item.api || '';
 
     row.innerHTML = `
       <div>
-        <div class="fav-title-text">${escapeHtml(item.name)}</div>
-        <div class="fav-path-sub">${escapeHtml(item.api || 'Custom')} • ${item.time}</div>
-        ${noteHtml}
+        <div class="fav-title-text">${escapeHtml(topTitle)}</div>
+        <div class="fav-path-sub">${escapeHtml(bottomPath)}</div>
       </div>
       <div class="fav-row-actions">
         <button class="btn btn-outline btn-sm btn-load-fav">Load</button>
@@ -1718,17 +1727,16 @@ async function renderFavoritesList() {
     `;
 
     row.querySelector('.btn-load-fav').onclick = () => {
-      const matchedOfficial = apiRegistry.find(a => a.api === item.api);
       if (matchedOfficial) {
         const cards = Array.from(document.querySelectorAll('#dynamic-api-container .api-card-item'));
         const targetCard = cards.find(c => c.textContent.includes(matchedOfficial.api));
         if (targetCard) {
           switchOfficialApi(matchedOfficial, targetCard).then(() => {
-            loadPresetPayloadIntoForm(item.payload[0], item.param_order);
+            loadPresetPayloadIntoForm(item.payload);
           });
         }
       } else {
-        switchToCustomMode(item.api, item.payload[0], item.param_order);
+        switchToCustomMode(item.api, item.payload);
       }
       closeModal('modal-favorites');
       triggerToast(`Loaded preset for ${item.api}`);
@@ -1746,17 +1754,24 @@ async function renderFavoritesList() {
   });
 }
 
-// 严格按照 paramOrder 顺序载入参数
-async function loadPresetPayloadIntoForm(payloadObj, paramOrder = null) {
+
+// 严格按照 payload 顺序载入参数（支持二维数组，同时向下兼容旧格式对象）
+async function loadPresetPayloadIntoForm(payloadData) {
   const container = document.getElementById('params-container');
   container.innerHTML = '';
 
-  const keys = Array.isArray(paramOrder) && paramOrder.length > 0 
-    ? paramOrder.filter(k => payloadObj.hasOwnProperty(k))
-    : Object.keys(payloadObj);
+  let entries = [];
+  if (Array.isArray(payloadData)) {
+    if (payloadData.length > 0 && Array.isArray(payloadData[0])) {
+      entries = payloadData; // 新结构: [ ["key", "val"], ... ]
+    } else if (payloadData.length > 0 && typeof payloadData[0] === 'object') {
+      entries = Object.entries(payloadData[0]); // 兼容历史数据: [ { key: val } ]
+    }
+  } else if (typeof payloadData === 'object' && payloadData !== null) {
+    entries = Object.entries(payloadData);
+  }
 
-  for (const k of keys) {
-    const v = payloadObj[k];
+  for (const [k, v] of entries) {
     const poolDef = await fetchParamDefinition(k) || {};
     const fieldType = poolDef.type || (Array.isArray(v) ? 'array' : 'string');
     addParamRow(k, v, poolDef.description || 'Preset parameter', !poolDef.description, fieldType);
