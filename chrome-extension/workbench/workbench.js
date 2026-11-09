@@ -1715,13 +1715,33 @@ function setupGlobalEvents() {
   };
   document.addEventListener('click', () => discussMenu.classList.add('hidden'));
 
-  document.getElementById('api-search').addEventListener('input', (e) => {
-    const term = e.target.value.toLowerCase();
-    document.querySelectorAll('#dynamic-api-container .api-card-item').forEach(card => {
-      const txt = card.textContent.toLowerCase();
-      card.style.display = txt.includes(term) ? 'block' : 'none';
+  // 优化：左侧 API 搜索过滤
+  const apiSearchInput = document.getElementById('api-search');
+  if (apiSearchInput) {
+    apiSearchInput.addEventListener('input', (e) => {
+      // 1. 去除首尾空白并转为小写
+      const term = e.target.value.trim().toLowerCase();
+
+      // 2. 遍历所有接口列表卡片
+      document.querySelectorAll('#dynamic-api-container .api-card-item').forEach(card => {
+        if (!term) {
+          card.style.display = ''; // 输入为空时恢复默认显示
+          return;
+        }
+
+        // 提取卡片内标题、描述和接口 path
+        const descText = card.querySelector('.api-card-desc')?.textContent.toLowerCase() || '';
+        const subText = card.querySelector('.api-card-sub')?.textContent.toLowerCase() || '';
+        const allText = card.textContent.toLowerCase();
+
+        // 3. 只要路径、描述或卡片文本中包含关键词即命中
+        const isMatch = subText.includes(term) || descText.includes(term) || allText.includes(term);
+
+        // 匹配成功清空 inline display 恢复原始样式，否则隐藏
+        card.style.display = isMatch ? '' : 'none';
+      });
     });
-  });
+  }
 
   // Esc Key Handler
   document.addEventListener('keydown', (e) => {
