@@ -1539,14 +1539,12 @@ function setupGlobalEvents() {
   };
 
 
-	const doSavePreset = async () => {
+    const doSavePreset = async () => {
 	  const apiPath = getEffectiveApiPath();
 	  const payloadEntries = extractPayloadEntries();
 	  
-	  // 1. 获取用户输入的备注
 	  let note = document.getElementById('input-preset-note')?.value.trim() || '';
 
-	  // 2. 如果没填备注，自动使用当前接口的默认标题（官方接口取 desc，自定义模式取 Custom API）
 	  if (!note) {
 		if (currentApiItem) {
 		  note = Array.isArray(currentApiItem.desc) 
@@ -1565,6 +1563,21 @@ function setupGlobalEvents() {
 		api: apiPath,
 		payload: payloadEntries
 	  };
+
+	  const getPresetFingerprint = (item) => {
+		const api = item.api || '';
+		const n = item.note || '';
+		const payloadStr = JSON.stringify(item.payload || []);
+		return `${api}:::${n}:::${payloadStr}`;
+	  };
+
+	  const newFingerprint = getPresetFingerprint(newPreset);
+	  const isDuplicate = list.some(item => getPresetFingerprint(item) === newFingerprint);
+
+	  if (isDuplicate) {
+		triggerToast('Preset already exists! Failed to save duplicate.');
+		return;
+	  }
 
 	  list.unshift(newPreset);
 	  await chrome.storage.local.set({ [storeKey]: list });
@@ -1621,43 +1634,29 @@ function setupGlobalEvents() {
         return `${api}:::${note}:::${payloadStr}`;
       };
 
-      const existingFingerprints = new Set(existingList.map(getPresetFingerprint));
-      let addedCount = 0;
+      // 1. 提取所有导入文件中的数据项（仅支持标准结构）
+      const rawImportedItems = [];
 
       for (const file of files) {
         try {
           const text = await file.text();
-          let imported = JSON.parse(text);
+          let parsed = JSON.parse(text);
 
-          if (!Array.isArray(imported)) {
-            if (typeof imported === 'object' && imported !== null && imported.payload) {
-              imported = [imported];
+          if (!Array.isArray(parsed)) {
+            if (typeof parsed === 'object' && parsed !== null && parsed.payload) {
+              parsed = [parsed];
             } else {
               continue;
             }
           }
 
-          imported.forEach(item => {
-            if (item && item.payload) {
-              const fp = getPresetFingerprint(item);
-              if (!existingFingerprints.has(fp)) {
-                existingFingerprints.add(fp);
-
-                // 统一为二维数组结构
-                let formattedPayload = item.payload;
-                if (!Array.isArray(formattedPayload)) {
-                  formattedPayload = Object.entries(formattedPayload);
-                } else if (formattedPayload.length > 0 && !Array.isArray(formattedPayload[0]) && typeof formattedPayload[0] === 'object') {
-                  formattedPayload = Object.entries(formattedPayload[0]);
-                }
-
-                existingList.push({
-                  note: item.note || '',
-                  api: item.api || '',
-                  payload: formattedPayload
-                });
-                addedCount++;
-              }
+          parsed.forEach(item => {
+            if (item && Array.isArray(item.payload)) {
+              rawImportedItems.push({
+                note: item.note || '',
+                api: item.api || '',
+                payload: item.payload
+              });
             }
           });
         } catch (fileErr) {
@@ -1665,9 +1664,43 @@ function setupGlobalEvents() {
         }
       }
 
-      await chrome.storage.local.set({ [storeKey]: existingList });
+      if (rawImportedItems.length === 0) {
+        triggerToast('No valid presets found in file(s)');
+        return;
+      }
+
+      // 2. 如果导入的数据是多条，先在导入集自身合并去重
+      let uniqueImportedItems = [];
+      if (rawImportedItems.length === 1) {
+        uniqueImportedItems = rawImportedItems;
+      } else {
+        const internalFps = new Set();
+        rawImportedItems.forEach(item => {
+          const fp = getPresetFingerprint(item);
+          if (!internalFps.has(fp)) {
+            internalFps.add(fp);
+            uniqueImportedItems.push(item);
+          }
+        });
+      }
+
+      // 3. 和原有的收藏列表比对去重
+      const existingFingerprints = new Set(existingList.map(getPresetFingerprint));
+      const itemsToPrepend = uniqueImportedItems.filter(item => {
+        const fp = getPresetFingerprint(item);
+        return !existingFingerprints.has(fp);
+      });
+
+      if (itemsToPrepend.length === 0) {
+        triggerToast('Preset(s) already exist, skipped');
+        return;
+      }
+
+      // 4. 将新数据置顶（放到最上面）并持久化保存
+      const updatedList = [...itemsToPrepend, ...existingList];
+      await chrome.storage.local.set({ [storeKey]: updatedList });
       await renderFavoritesList();
-      triggerToast(`Imported ${addedCount} new presets from ${files.length} file(s) (duplicates skipped)`);
+      triggerToast(`Imported ${itemsToPrepend.length} preset(s) to top (duplicates skipped)`);
     } catch (err) {
       console.error('Import presets error:', err);
       triggerToast('Failed to read presets file');
