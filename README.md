@@ -6,7 +6,7 @@ A free, open-source [Chrome extension](https://chromewebstore.google.com/detail/
 
 ## 🔒 Test Safely with Free $1 Credit
 
-- **Zero Risk & Zero Cost**: Every new [DataForSEO account](https://seo360.pages.dev/dataforseo) comes with **$1 free testing credit**—you do not even need to enter a credit card to try it out.
+- **Zero Risk & Zero Cost**: Every new [DataForSEO account](https://try.dataforseo.com/seo360) comes with **$1 free testing credit**—you do not even need to enter a credit card to try it out.
 - **Local Storage Only**: Your API credentials remain strictly in your browser. Requests go directly from your machine to official DataForSEO endpoints with no middleman servers.
 - **Change Your Key Anytime**: Once you verify the data, you can immediately reset or revoke your API key inside the official DataForSEO dashboard. You are always in full control.
 
