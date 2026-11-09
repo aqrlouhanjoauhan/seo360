@@ -1538,25 +1538,39 @@ function setupGlobalEvents() {
     closeModal('modal-save-preset');
   };
 
-  // 保存预设：Note 在最前，Payload 采用键值二维数组保留次序，去掉 name/time/param_order
-  const doSavePreset = async () => {
-    const apiPath = getEffectiveApiPath();
-    const payloadEntries = extractPayloadEntries();
-    const note = document.getElementById('input-preset-note')?.value.trim() || '';
-    const storeKey = 'global_api_presets';
-    const list = (await chrome.storage.local.get([storeKey]))[storeKey] || [];
 
-    const newPreset = {
-      note: note,
-      api: apiPath,
-      payload: payloadEntries
-    };
+	const doSavePreset = async () => {
+	  const apiPath = getEffectiveApiPath();
+	  const payloadEntries = extractPayloadEntries();
+	  
+	  // 1. 获取用户输入的备注
+	  let note = document.getElementById('input-preset-note')?.value.trim() || '';
 
-    list.unshift(newPreset);
-    await chrome.storage.local.set({ [storeKey]: list });
-    closeModal('modal-save-preset');
-    triggerToast(`Preset saved for ${apiPath || 'custom'}!`);
-  };
+	  // 2. 如果没填备注，自动使用当前接口的默认标题（官方接口取 desc，自定义模式取 Custom API）
+	  if (!note) {
+		if (currentApiItem) {
+		  note = Array.isArray(currentApiItem.desc) 
+			? currentApiItem.desc.join(' ') 
+			: (currentApiItem.desc || currentApiItem.api);
+		} else {
+		  note = 'Custom API';
+		}
+	  }
+
+	  const storeKey = 'global_api_presets';
+	  const list = (await chrome.storage.local.get([storeKey]))[storeKey] || [];
+
+	  const newPreset = {
+		note: note,
+		api: apiPath,
+		payload: payloadEntries
+	  };
+
+	  list.unshift(newPreset);
+	  await chrome.storage.local.set({ [storeKey]: list });
+	  closeModal('modal-save-preset');
+	  triggerToast(`Preset saved for ${apiPath || 'custom'}!`);
+	};
 
   document.getElementById('btn-confirm-save-preset').onclick = doSavePreset;
   document.getElementById('input-preset-note').addEventListener('keydown', (e) => {
@@ -1594,22 +1608,10 @@ function setupGlobalEvents() {
   };
 
   fileInputEl.onchange = async (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+    const files = Array.from(e.target.files || []);
+    if (!files.length) return;
 
     try {
-      const text = await file.text();
-      let imported = JSON.parse(text);
-
-      if (!Array.isArray(imported)) {
-        if (typeof imported === 'object' && imported !== null && imported.payload) {
-          imported = [imported];
-        } else {
-          triggerToast('Invalid presets file format');
-          return;
-        }
-      }
-
       const existingList = (await chrome.storage.local.get([storeKey]))[storeKey] || [];
       
       const getPresetFingerprint = (item) => {
@@ -1622,33 +1624,50 @@ function setupGlobalEvents() {
       const existingFingerprints = new Set(existingList.map(getPresetFingerprint));
       let addedCount = 0;
 
-      imported.forEach(item => {
-        if (item && item.payload) {
-          const fp = getPresetFingerprint(item);
-          if (!existingFingerprints.has(fp)) {
-            existingFingerprints.add(fp);
+      for (const file of files) {
+        try {
+          const text = await file.text();
+          let imported = JSON.parse(text);
 
-            // 统一为二维数组结构
-            let formattedPayload = item.payload;
-            if (!Array.isArray(formattedPayload)) {
-              formattedPayload = Object.entries(formattedPayload);
-            } else if (formattedPayload.length > 0 && !Array.isArray(formattedPayload[0]) && typeof formattedPayload[0] === 'object') {
-              formattedPayload = Object.entries(formattedPayload[0]);
+          if (!Array.isArray(imported)) {
+            if (typeof imported === 'object' && imported !== null && imported.payload) {
+              imported = [imported];
+            } else {
+              continue;
             }
-
-            existingList.push({
-              note: item.note || '',
-              api: item.api || '',
-              payload: formattedPayload
-            });
-            addedCount++;
           }
+
+          imported.forEach(item => {
+            if (item && item.payload) {
+              const fp = getPresetFingerprint(item);
+              if (!existingFingerprints.has(fp)) {
+                existingFingerprints.add(fp);
+
+                // 统一为二维数组结构
+                let formattedPayload = item.payload;
+                if (!Array.isArray(formattedPayload)) {
+                  formattedPayload = Object.entries(formattedPayload);
+                } else if (formattedPayload.length > 0 && !Array.isArray(formattedPayload[0]) && typeof formattedPayload[0] === 'object') {
+                  formattedPayload = Object.entries(formattedPayload[0]);
+                }
+
+                existingList.push({
+                  note: item.note || '',
+                  api: item.api || '',
+                  payload: formattedPayload
+                });
+                addedCount++;
+              }
+            }
+          });
+        } catch (fileErr) {
+          console.error('Error reading file:', file.name, fileErr);
         }
-      });
+      }
 
       await chrome.storage.local.set({ [storeKey]: existingList });
       await renderFavoritesList();
-      triggerToast(`Imported ${addedCount} new presets (duplicates skipped)`);
+      triggerToast(`Imported ${addedCount} new presets from ${files.length} file(s) (duplicates skipped)`);
     } catch (err) {
       console.error('Import presets error:', err);
       triggerToast('Failed to read presets file');
@@ -1721,10 +1740,19 @@ async function renderFavoritesList() {
         <div class="fav-path-sub">${escapeHtml(bottomPath)}</div>
       </div>
       <div class="fav-row-actions">
+        <button class="btn btn-outline btn-sm btn-export-single-fav" title="Export this preset">📤</button>
         <button class="btn btn-outline btn-sm btn-load-fav">Load</button>
         <button class="btn-del-fav" title="Delete preset">🗑</button>
       </div>
     `;
+
+    row.querySelector('.btn-export-single-fav').onclick = (e) => {
+      e.stopPropagation();
+      const safeName = topTitle
+        .replace(/[^a-zA-Z0-9_\u4e00-\u9fa5]/g, '_')
+        .replace(/^_+|_+$/g, '') || 'preset';
+      downloadJsonFile(`${safeName}.json`, [item], `Exported preset: ${safeName}`);
+    };
 
     row.querySelector('.btn-load-fav').onclick = () => {
       if (matchedOfficial) {
@@ -1753,7 +1781,6 @@ async function renderFavoritesList() {
     container.appendChild(row);
   });
 }
-
 
 // 严格按照 payload 顺序载入参数（支持二维数组，同时向下兼容旧格式对象）
 async function loadPresetPayloadIntoForm(payloadData) {
