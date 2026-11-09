@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "SEO360: DataForSEO Free No-Code API Test Tool",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "No-code API tool for DataForSEO: test requests, explore JSON trees, export CSV & share saved presets.",
   "icons": {
     "16": "icon/icon16.png",
