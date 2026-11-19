@@ -6,12 +6,17 @@
   },
   "keywords": {
     "type": "array",
-    "description": "List of keywords to analyze. Click to add: <code>seo tools</code>, <code>rank tracker</code>",
+    "description": "List of seed keywords. DataForSEO Labs Keyword Ideas supports up to 200 keywords. Click to add: <code>seo tools</code>, <code>rank tracker</code>",
     "default": "[\"seo tools\", \"rank tracker\"]"
   },
   "target": {
     "type": "string",
-    "description": "Domain or target URL without protocol (http/https), e.g. <code>dataforseo.com</code>",
+    "description": "Target domain, subdomain, or page without protocol (http/https), e.g. <code>dataforseo.com</code>, <code>example.com</code>",
+    "default": ""
+  },
+  "url": {
+    "type": "string",
+    "description": "Direct URL of a search query or page to process, including protocol, e.g. <code>https://example.com</code>",
     "default": ""
   },
   "location_code": {
@@ -19,19 +24,319 @@
     "description": "Google Location ID. Common Countries: <code>2840</code> (US), <code>2826</code> (UK), <code>2124</code> (Canada), <code>2036</code> (Australia), <code>2276</code> (Germany), <code>2250</code> (France), <code>2392</code> (Japan), <code>2410</code> (South Korea), <code>2356</code> (India), <code>2156</code> (China), <code>2344</code> (Hong Kong), <code>2158</code> (Taiwan), <code>2702</code> (Singapore), <code>2484</code> (Mexico), <code>2076</code> (Brazil), <code>2724</code> (Spain), <code>2380</code> (Italy), <code>2528</code> (Netherlands), <code>2756</code> (Switzerland), <code>2752</code> (Sweden), <code>2040</code> (Austria), <code>2764</code> (Thailand), <code>2704</code> (Vietnam), <code>2458</code> (Malaysia), <code>2360</code> (Indonesia), <code>2710</code> (South Africa)",
     "default": 2840
   },
+  "location_name": {
+    "type": "string",
+    "description": "Full search location name, used instead of a location code. Example: <code>United States</code> or <code>London,England,United Kingdom</code>.",
+    "default": "United States"
+  },
+  "location_coordinate": {
+    "type": "string",
+    "description": "GPS location used for localized results. Format is latitude,longitude or latitude,longitude,radius. Example: <code>40.7128,-74.0060</code>.",
+    "default": ""
+  },
   "language_code": {
     "type": "string",
     "description": "Two-letter ISO 639-1 language code. Available: <code>en</code> (English), <code>zh-CN</code> (Simplified Chinese), <code>zh-TW</code> (Traditional Chinese), <code>es</code> (Spanish), <code>de</code> (German), <code>fr</code> (French), <code>ja</code> (Japanese), <code>ko</code> (Korean), <code>pt</code> (Portuguese), <code>it</code> (Italian), <code>nl</code> (Dutch), <code>ru</code> (Russian), <code>ar</code> (Arabic), <code>hi</code> (Hindi), <code>th</code> (Thai), <code>vi</code> (Vietnamese), <code>id</code> (Indonesian), <code>tr</code> (Turkish), <code>pl</code> (Polish), <code>sv</code> (Swedish)",
     "default": "en"
   },
+  "language_name": {
+    "type": "string",
+    "description": "Full search language name, used instead of a language code. Common values: <code>English</code>, <code>Spanish</code>, <code>German</code>, <code>French</code>.",
+    "default": "English"
+  },
+  "device": {
+    "type": "string",
+    "description": "Device type used to retrieve search results. Common values: <code>desktop</code>, <code>mobile</code>. Default is <code>desktop</code>.",
+    "default": "desktop"
+  },
+  "os": {
+    "type": "string",
+    "description": "Operating system used for the selected device. Desktop values: <code>windows</code>, <code>macos</code>; mobile values: <code>android</code>, <code>ios</code>.",
+    "default": "windows"
+  },
+  "se_domain": {
+    "type": "string",
+    "description": "Search engine domain used for the request, such as <code>google.com</code>, <code>google.co.uk</code>, or <code>google.com.au</code>. If omitted, the domain is selected automatically.",
+    "default": "google.com"
+  },
+  "search_engine": {
+    "type": "string",
+    "description": "Search engine used for keyword or SERP data. Values: <code>google</code>, <code>bing</code>, <code>yahoo</code>, <code>yandex</code>, <code>baidu</code>, <code>naver</code>.",
+    "default": "google"
+  },
+  "search_engine_type": {
+    "type": "string",
+    "description": "Search engine result type or vertical. Common values: <code>organic</code>, <code>news</code>, <code>images</code>, <code>videos</code>, <code>shopping</code>, <code>maps</code>.",
+    "default": "organic"
+  },
   "depth": {
     "type": "number",
-    "description": "Number of SERP items to crawl/return. Default is <code>10</code>, maximum is <code>100</code>.",
+    "description": "Number of SERP results to parse. Default is <code>10</code>; maximum is <code>200</code> (or <code>100</code> depending on endpoint). Greater depth can increase cost.",
     "default": 10
   },
   "limit": {
     "type": "number",
-    "description": "Maximum number of keyword results to return (default <code>100</code>, max 1000)",
+    "description": "Maximum number of records to return. Common values are <code>10</code>, <code>100</code>, and <code>1000</code>; the maximum depends on the endpoint.",
     "default": 100
+  },
+  "offset": {
+    "type": "number",
+    "description": "Number of records to skip before returning results. Use <code>0</code> for the first page and increase it (e.g., <code>100</code>) for pagination.",
+    "default": 0
+  },
+  "sort_by": {
+    "type": "string",
+    "description": "Field used to sort returned records. Common values include <code>relevance</code>, <code>search_volume</code>, <code>cpc</code>, <code>competition</code>, <code>keyword_difficulty</code>, and <code>etv</code>.",
+    "default": "relevance"
+  },
+  "order_by": {
+    "type": "array",
+    "description": "Sorting rules in field and direction format. Use up to three rules, such as <code>relevance,desc</code>, <code>search_volume,desc</code>, or <code>etv,desc</code>.",
+    "default": "[\"relevance,desc\"]"
+  },
+  "filters": {
+    "type": "array",
+    "description": "Filtering conditions. You can use up to 8 filters with operators such as <code>></code>, <code>>=</code>, <code>=</code>, <code><></code>, <code>in</code>, <code>like</code>, and <code>not_like</code>. Example: <code>[\"keyword_info.search_volume\", \">\", 100]</code>.",
+    "default": "[[\"keyword_info.search_volume\", \">\", 100]]"
+  },
+  "item_types": {
+    "type": "array",
+    "description": "SERP result types to include in the response. Common values: <code>organic</code>, <code>paid</code>, <code>featured_snippet</code>, <code>local_pack</code>.",
+    "default": "[\"organic\", \"paid\"]"
+  },
+  "include_serp_info": {
+    "type": "boolean",
+    "description": "Includes SERP metrics and SERP item types for each keyword. Use <code>true</code> to include SERP information or <code>false</code> to omit it.",
+    "default": false
+  },
+  "include_subdomains": {
+    "type": "boolean",
+    "description": "Controls whether subdomains are included in domain-level analysis. Use <code>true</code> to include subdomains or <code>false</code> to analyze only the main domain.",
+    "default": false
+  },
+  "include_clickstream_data": {
+    "type": "boolean",
+    "description": "Includes clickstream-based traffic and demographic metrics. Use <code>true</code> to enable it (may increase cost) or <code>false</code> to omit it.",
+    "default": false
+  },
+  "closely_variants": {
+    "type": "boolean",
+    "description": "Controls keyword matching. <code>true</code> searches close phrase variants; <code>false</code> uses broader matching.",
+    "default": false
+  },
+  "ignore_synonyms": {
+    "type": "boolean",
+    "description": "Excludes highly similar or synonymous keywords when enabled. Use <code>true</code> to return only core keywords or <code>false</code> to include them.",
+    "default": false
+  },
+  "historical_serp_mode": {
+    "type": "string",
+    "description": "Historical SERP collection mode. Values: <code>live</code> for currently ranking results, <code>lost</code> for lost results, or <code>all</code> for both.",
+    "default": "live"
+  },
+  "backlinks_status_type": {
+    "type": "string",
+    "description": "Backlink status category to analyze. Common values: <code>live</code> for currently active links, <code>lost</code> for lost links, and <code>all</code> for both.",
+    "default": "live"
+  },
+  "mode": {
+    "type": "string",
+    "description": "Processing mode for endpoints that support multiple analysis modes. Common values include <code>as_is</code>, <code>one_per_domain</code>, <code>subdomains</code>, and <code>pages</code>.",
+    "default": "as_is"
+  },
+  "tag": {
+    "type": "string",
+    "description": "User-defined task identifier used to associate requests and results (max 255 chars). Example: <code>project_batch_1</code>.",
+    "default": "project_batch_1"
+  },
+  "calculate_rectangles": {
+    "type": "boolean",
+    "description": "Returns pixel coordinates and dimensions for SERP elements (may incur extra charge). Use <code>true</code> to calculate or <code>false</code> to omit.",
+    "default": false
+  },
+  "load_resources": {
+    "type": "boolean",
+    "description": "Controls whether page resources (images, stylesheets, scripts) are loaded during crawling. Use <code>true</code> to load or <code>false</code> to skip.",
+    "default": false
+  },
+  "enable_javascript": {
+    "type": "boolean",
+    "description": "Enables JavaScript rendering during crawling. Use <code>true</code> for JS-dependent pages or <code>false</code> for faster non-rendered crawling.",
+    "default": false
+  },
+  "enable_browser_rendering": {
+    "type": "boolean",
+    "description": "Enables browser-based rendering for pages requiring a real browser environment. Use <code>true</code> to render or <code>false</code> for standard crawling.",
+    "default": false
+  },
+  "browser_screen_width": {
+    "type": "number",
+    "description": "Browser viewport width in pixels (range 240–9999). Common values: <code>1366</code>, <code>1440</code>, <code>1920</code>.",
+    "default": 1366
+  },
+  "browser_screen_height": {
+    "type": "number",
+    "description": "Browser viewport height in pixels (range 240–9999). Common values: <code>768</code>, <code>900</code>, <code>1080</code>.",
+    "default": 768
+  },
+  "browser_screen_resolution_ratio": {
+    "type": "number",
+    "description": "Browser device-pixel ratio (range 0.5–3). Typical values: <code>1</code>, <code>1.5</code>, <code>2</code>.",
+    "default": 1
+  },
+  "max_crawl_pages": {
+    "type": "number",
+    "description": "Maximum number of pages to crawl (max 100). Common values: <code>1</code>, <code>10</code>, <code>100</code>.",
+    "default": 1
+  },
+  "search_param": {
+    "type": "string",
+    "description": "Additional search-engine query parameters appended to the search request. Example: <code>safe=active</code>.",
+    "default": ""
+  },
+  "group_organic_results": {
+    "type": "boolean",
+    "description": "Controls how related organic results are represented. Use <code>true</code> to group related results under their parent or <code>false</code> to separate them.",
+    "default": true
+  },
+  "resolve_goto_urls": {
+    "type": "boolean",
+    "description": "Resolves search-engine redirect URLs to final destination URLs. Use <code>true</code> to resolve or <code>false</code> to keep original URLs.",
+    "default": false
+  },
+  "resolve_poisoned_results": {
+    "type": "boolean",
+    "description": "Detects and resolves potentially poisoned SERP results. Use <code>true</code> to enable detection or <code>false</code> to disable.",
+    "default": false
+  },
+  "load_async_ai_overview": {
+    "type": "boolean",
+    "description": "Loads asynchronous AI Overview elements when available. Use <code>true</code> to request or <code>false</code> to omit.",
+    "default": false
+  },
+  "target_search_mode": {
+    "type": "string",
+    "description": "Controls how target matching is evaluated. Use <code>any</code> when one target match is sufficient or <code>all</code> when every target must match.",
+    "default": "any"
+  },
+  "match_type": {
+    "type": "string",
+    "description": "Target matching rule used with crawl stopping or target detection. Values: <code>domain</code>, <code>with_subdomains</code>, <code>wildcard</code>.",
+    "default": "domain"
+  },
+  "match_value": {
+    "type": "string",
+    "description": "Domain, subdomain, URL path, or wildcard pattern used for matching. Examples: <code>example.com</code>, <code>example.com/</code>, <code>/blog/</code>.",
+    "default": "example.com"
+  },
+  "stop_crawl_on_match": {
+    "type": "array",
+    "description": "Targets that stop crawling when matched (up to 10 targets using match_type and match_value).",
+    "default": "[{\"match_type\":\"domain\",\"match_value\":\"example.com\"}]"
+  },
+  "find_targets_in": {
+    "type": "array",
+    "description": "SERP element types in which target matches are searched. Common values: <code>organic</code>, <code>paid</code>, <code>local_pack</code>, <code>featured_snippet</code>.",
+    "default": "[\"organic\"]"
+  },
+  "ignore_targets_in": {
+    "type": "array",
+    "description": "SERP element types excluded from target matching. Common values: <code>organic</code>, <code>paid</code>, <code>local_pack</code>, <code>images</code>.",
+    "default": "[]"
+  },
+  "remove_from_url": {
+    "type": "array",
+    "description": "URL parameters removed from URLs returned in SERP results. Common values: <code>utm_source</code>, <code>utm_medium</code>, <code>utm_campaign</code>.",
+    "default": "[\"utm_source\", \"utm_medium\", \"utm_campaign\"]"
+  },
+  "include_ranked_keywords": {
+    "type": "boolean",
+    "description": "Includes ranked keyword data in domain or page analysis. Use <code>true</code> to include or <code>false</code> to omit.",
+    "default": false
+  },
+  "include_lost_serp": {
+    "type": "boolean",
+    "description": "Includes keywords or SERP elements that are no longer ranking. Use <code>true</code> to include lost results or <code>false</code> for current results only.",
+    "default": false
+  },
+  "include_history": {
+    "type": "boolean",
+    "description": "Includes historical metrics where supported. Use <code>true</code> to request historical data or <code>false</code> for latest snapshot only.",
+    "default": false
+  },
+  "exclude_top_domains": {
+    "type": "array",
+    "description": "Domains excluded from keyword or competitor results (without protocol). Common values: <code>wikipedia.org</code>, <code>youtube.com</code>.",
+    "default": "[\"wikipedia.org\", \"youtube.com\"]"
+  },
+  "category_code": {
+    "type": "number",
+    "description": "Numeric category identifier used to restrict keyword or marketplace data to a category. Default is <code>0</code>.",
+    "default": 0
+  },
+  "date_from": {
+    "type": "string",
+    "description": "Start date for historical data in YYYY-MM-DD format. Example: <code>2025-01-01</code>.",
+    "default": ""
+  },
+  "date_to": {
+    "type": "string",
+    "description": "End date for historical data in YYYY-MM-DD format. Example: <code>2025-12-31</code>.",
+    "default": ""
+  },
+  "include_content_info": {
+    "type": "boolean",
+    "description": "Includes content-level information in supported OnPage results. Use <code>true</code> to include or <code>false</code> to omit.",
+    "default": false
+  },
+  "check_spell": {
+    "type": "boolean",
+    "description": "Requests spelling and autocorrection information for supported SERP endpoints. Use <code>true</code> to include or <code>false</code> to omit.",
+    "default": false
+  },
+  "store_raw_html": {
+    "type": "boolean",
+    "description": "Stores or returns the raw HTML document when supported. Use <code>true</code> to retain or <code>false</code> to skip.",
+    "default": false
+  },
+  "custom_js": {
+    "type": "string",
+    "description": "Custom JavaScript executed during page rendering (requires enable_javascript=true).",
+    "default": ""
+  },
+  "custom_js_timeout": {
+    "type": "number",
+    "description": "Maximum execution time for custom JavaScript in milliseconds. Common values: <code>1000</code>, <code>5000</code>, <code>10000</code>.",
+    "default": 5000
+  },
+  "respect_sitemap": {
+    "type": "boolean",
+    "description": "Controls whether sitemap files are used to discover URLs during crawling. Use <code>true</code> to respect or <code>false</code> to ignore.",
+    "default": true
+  },
+  "check_robots_txt": {
+    "type": "boolean",
+    "description": "Controls whether the crawler checks robots.txt directives. Use <code>true</code> to follow rules or <code>false</code> to ignore.",
+    "default": true
+  },
+  "crawl_depth": {
+    "type": "number",
+    "description": "Maximum link depth from the starting URL. Common values: <code>1</code>, <code>2</code>, <code>5</code>.",
+    "default": 1
+  },
+  "max_crawl_urls": {
+    "type": "number",
+    "description": "Maximum number of URLs processed during an OnPage crawl. Common values: <code>100</code>, <code>1000</code>, <code>10000</code>.",
+    "default": 100
+  },
+  "custom_user_agent": {
+    "type": "string",
+    "description": "Custom user-agent string sent during crawling. Common value: <code>Mozilla/5.0</code>.",
+    "default": "Mozilla/5.0"
+  },
+  "return_charts": {
+    "type": "boolean",
+    "description": "Returns chart or historical visualization data when supported. Use <code>true</code> to include charts or <code>false</code> to omit.",
+    "default": false
   }
 }
