@@ -95,8 +95,8 @@
     "default": "[\"relevance,desc\"]"
   },
   "filters": {
-    "type": "array",
-    "description": "Filtering conditions. You can use up to 8 filters with operators such as <code>></code>, <code>>=</code>, <code>=</code>, <code><></code>, <code>in</code>, <code>like</code>, and <code>not_like</code>. Example: <code>[\"keyword_info.search_volume\", \">\", 100]</code>.",
+    "type": "string",
+    "description": "Filtering conditions as a JSON nested array (up to 8 filters). Operators: >, >=, =, <>, in, like, not_like. Click to apply: <code>[[\"keyword_info.search_volume\", \">\", 100]]</code>",
     "default": "[[\"keyword_info.search_volume\", \">\", 100]]"
   },
   "item_types": {
@@ -230,8 +230,8 @@
     "default": "example.com"
   },
   "stop_crawl_on_match": {
-    "type": "array",
-    "description": "Targets that stop crawling when matched (up to 10 targets using match_type and match_value).",
+    "type": "string",
+    "description": "Targets that stop crawling when matched, as a JSON array of objects (up to 10 targets). Click to apply: <code>[{\"match_type\":\"domain\",\"match_value\":\"example.com\"}]</code>",
     "default": "[{\"match_type\":\"domain\",\"match_value\":\"example.com\"}]"
   },
   "find_targets_in": {
