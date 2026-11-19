@@ -1,17 +1,7 @@
 {
   "use_params": [
-    "target"
-  ],
-  "params": {
-    "include_subdomains": {
-      "type": "boolean",
-      "description": "Include backlinks to subdomains. Options: <code>true</code> (default) or <code>false</code>",
-      "default": true
-    },
-    "backlinks_status_type": {
-      "type": "string",
-      "description": "Backlinks status filter: <code>live</code> (default), <code>all</code>, or <code>lost</code>",
-      "default": "live"
-    }
-  }
+    "target",
+    "include_subdomains",
+    "backlinks_status_type"
+  ]
 }
