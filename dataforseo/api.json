@@ -2,17 +2,82 @@
   {
     "file": "serp_google_organic_live_regular.json",
     "api": "serp/google/organic/live/regular",
-    "desc": "Google Organic SERP Live Regular (Check instant rankings & positions for target domain)"
+    "desc": "Google Organic SERP Live Regular (Check organic rankings, result positions, and SERP features)"
+  },
+  {
+    "file": "serp_google_maps_live_advanced.json",
+    "api": "serp/google/maps/live/advanced",
+    "desc": "Google Maps SERP Live Advanced (Track local rankings, businesses, and map-pack visibility)"
+  },
+  {
+    "file": "serp_google_shopping_live_advanced.json",
+    "api": "serp/google/shopping/live/advanced",
+    "desc": "Google Shopping SERP Live Advanced (Analyze product visibility and shopping competitors)"
+  },
+  {
+    "file": "serp_google_news_live_advanced.json",
+    "api": "serp/google/news/live/advanced",
+    "desc": "Google News SERP Live Advanced (Monitor news visibility and publisher results)"
+  },
+  {
+    "file": "serp_google_organic_live_html.json",
+    "api": "serp/google/organic/live/html",
+    "desc": "Google Organic SERP Live HTML (Retrieve rendered SERP HTML for custom parsing)"
+  },
+  {
+    "file": "serp_bing_organic_live_regular.json",
+    "api": "serp/bing/organic/live/regular",
+    "desc": "Bing Organic SERP Live Regular (Check Bing rankings and organic SERP features)"
+  },
+  {
+    "file": "serp_google_organic_live_advanced.json",
+    "api": "serp/google/organic/live/advanced",
+    "desc": "Google Organic SERP Live Advanced (Full SERP structure including Featured Snippets, PAA, and AI Overview)"
   },
   {
     "file": "keywords_data_google_search_volume.json",
     "api": "keywords_data/google_ads/search_volume/live",
-    "desc": "Google Ads Search Volume Live (Monthly searches, average CPC, and competition)"
+    "desc": "Google Ads Search Volume Live (Get keyword volume, competition, CPC, and monthly trends)"
   },
   {
-    "file": "dataforseo_labs_google_ranked_keywords.json",
-    "api": "dataforseo_labs/google/ranked_keywords/live",
-    "desc": "Google Ranked Keywords Live (Reverse engineer any competitor domain's ranking keywords)"
+    "file": "keywords_data_google_ads_keywords_for_site_live.json",
+    "api": "keywords_data/google_ads/keywords_for_site/live",
+    "desc": "Google Ads Keywords for Site Live (Discover keyword ideas associated with a website)"
+  },
+  {
+    "file": "keywords_data_google_ads_keywords_for_keywords_live.json",
+    "api": "keywords_data/google_ads/keywords_for_keywords/live",
+    "desc": "Google Ads Keywords for Keywords Live (Expand seed keywords into related keyword ideas)"
+  },
+  {
+    "file": "keywords_data_google_ads_ad_traffic_by_keywords_live.json",
+    "api": "keywords_data/google_ads/ad_traffic_by_keywords/live",
+    "desc": "Google Ads Traffic by Keywords Live (Estimate paid traffic, CPC, and ad costs)"
+  },
+  {
+    "file": "keywords_data_bing_search_volume_live.json",
+    "api": "keywords_data/bing/search_volume/live",
+    "desc": "Bing Search Volume Live (Retrieve Bing keyword volume, competition, and CPC metrics)"
+  },
+  {
+    "file": "keywords_data_bing_keywords_for_site_live.json",
+    "api": "keywords_data/bing/keywords_for_site/live",
+    "desc": "Bing Keywords for Site Live (Find Bing keyword ideas for a target website)"
+  },
+  {
+    "file": "keywords_data_bing_keywords_for_keywords_live.json",
+    "api": "keywords_data/bing/keywords_for_keywords/live",
+    "desc": "Bing Keywords for Keywords Live (Generate related keyword suggestions from seed terms)"
+  },
+  {
+    "file": "keywords_data_bing_keyword_performance_live.json",
+    "api": "keywords_data/bing/keyword_performance/live",
+    "desc": "Bing Keyword Performance Live (Retrieve historical keyword performance metrics)"
+  },
+  {
+    "file": "keywords_data_dataforseo_trends_explore_live.json",
+    "api": "keywords_data/dataforseo_trends/explore/live",
+    "desc": "DataForSEO Trends Explore Live (Compare keyword popularity over time and across regions)"
   },
   {
     "file": "dataforseo_labs_google_keyword_ideas.json",
@@ -20,8 +85,78 @@
     "desc": "Google Keyword Ideas Live (Brainstorm & discover related long-tail keywords from seed terms)"
   },
   {
+    "file": "dataforseo_labs_google_ranked_keywords.json",
+    "api": "dataforseo_labs/google/ranked_keywords/live",
+    "desc": "Google Ranked Keywords Live (Find keywords for which a domain or page ranks)"
+  },
+  {
+    "file": "dataforseo_labs_google_competitors_domain_live.json",
+    "api": "dataforseo_labs/google/competitors_domain/live",
+    "desc": "Google Competitors Domain Live (Identify domains competing for similar organic keywords)"
+  },
+  {
+    "file": "dataforseo_labs_google_domain_rank_overview_live.json",
+    "api": "dataforseo_labs/google/domain_rank_overview/live",
+    "desc": "Google Domain Rank Overview Live (Review domain rankings, traffic, and visibility metrics)"
+  },
+  {
+    "file": "dataforseo_labs_google_subdomains_live.json",
+    "api": "dataforseo_labs/google/subdomains/live",
+    "desc": "Google Subdomains Live (Analyze subdomain rankings, traffic, and keyword distribution)"
+  },
+  {
+    "file": "dataforseo_labs_google_bulk_keyword_difficulty_live.json",
+    "api": "dataforseo_labs/google/bulk_keyword_difficulty/live",
+    "desc": "Google Bulk Keyword Difficulty Live (Evaluate ranking difficulty for multiple keywords)"
+  },
+  {
     "file": "backlinks_summary_live.json",
     "api": "backlinks/summary/live",
-    "desc": "Backlinks Profile Summary Live (Analyze domain rank, total backlinks, and referring domains)"
+    "desc": "Backlinks Summary Live (Get high-level backlink, referring-domain, and rank statistics)"
+  },
+  {
+    "file": "backlinks_backlinks_live.json",
+    "api": "backlinks/backlinks/live",
+    "desc": "Backlinks Live (Retrieve individual backlinks, anchors, link attributes, and referring pages)"
+  },
+  {
+    "file": "backlinks_referring_domains_live.json",
+    "api": "backlinks/referring_domains/live",
+    "desc": "Referring Domains Live (Analyze domains linking to a target website)"
+  },
+  {
+    "file": "backlinks_anchors_live.json",
+    "api": "backlinks/anchors/live",
+    "desc": "Backlink Anchors Live (Analyze anchor-text distribution and backlink counts)"
+  },
+  {
+    "file": "backlinks_competitors_live.json",
+    "api": "backlinks/competitors/live",
+    "desc": "Backlink Competitors Live (Find domains competing for similar backlink profiles)"
+  },
+  {
+    "file": "on_page_instant_pages.json",
+    "api": "on_page/instant_pages",
+    "desc": "Instant Pages (Quickly retrieve page-level technical SEO and content metrics)"
+  },
+  {
+    "file": "on_page_content_parsing_live.json",
+    "api": "on_page/content_parsing/live",
+    "desc": "OnPage Content Parsing Live (Extract structured page content, headings, links, and text)"
+  },
+  {
+    "file": "domain_analytics_technologies_domain_live.json",
+    "api": "domain_analytics/technologies/domain/live",
+    "desc": "Domain Technologies Live (Identify technologies, categories, and software used by a website)"
+  },
+  {
+    "file": "content_analysis_search_live.json",
+    "api": "content_analysis/search/live",
+    "desc": "Content Analysis Search Live (Find keyword citations and analyze content context, quality, and sentiment)"
+  },
+  {
+    "file": "business_data_business_listings_search_live.json",
+    "api": "business_data/business_listings/search/live",
+    "desc": "Business Listings Search Live (Find local businesses and their listing information)"
   }
 ]

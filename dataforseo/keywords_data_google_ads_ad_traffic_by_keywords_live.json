@@ -1,0 +1,20 @@
+{
+  "use_params": [
+    "keywords",
+    "location_code",
+    "language_code",
+    "include_clickstream_data"
+  ],
+  "params": {
+    "bid": {
+      "type": "number",
+      "description": "Maximum CPC bid in USD used to estimate paid ad traffic and clicks. Example: <code>5.00</code>",
+      "default": 5.0
+    },
+    "match": {
+      "type": "string",
+      "description": "Keyword match type for Google Ads traffic estimation. Values: <code>exact</code>, <code>phrase</code>, <code>broad</code>.",
+      "default": "exact"
+    }
+  }
+}

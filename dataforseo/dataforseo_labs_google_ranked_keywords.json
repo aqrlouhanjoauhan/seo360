@@ -3,6 +3,9 @@
     "target",
     "location_code",
     "language_code",
+    "item_types",
+    "filters",
+    "order_by",
     "limit"
   ],
   "params": {

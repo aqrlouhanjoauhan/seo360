@@ -1,0 +1,17 @@
+{
+  "use_params": [
+    "location_coordinate",
+    "location_name",
+    "keyword",
+    "filters",
+    "order_by",
+    "limit"
+  ],
+  "params": {
+    "categories": {
+      "type": "array",
+      "description": "Business category names used to filter local listings, e.g. <code>[\"Restaurant\"]</code>, <code>[\"Dentist\"]</code>.",
+      "default": "[\"Restaurant\"]"
+    }
+  }
+}

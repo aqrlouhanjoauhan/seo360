@@ -1,0 +1,11 @@
+{
+  "use_params": [
+    "keyword",
+    "location_code",
+    "language_code",
+    "device",
+    "depth",
+    "target"
+  ],
+  "params": {}
+}

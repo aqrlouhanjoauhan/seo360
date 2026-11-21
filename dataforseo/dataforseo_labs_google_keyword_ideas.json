@@ -3,6 +3,9 @@
     "keywords",
     "location_code",
     "language_code",
+    "filters",
+    "order_by",
     "limit"
-  ]
+  ],
+  "params": {}
 }

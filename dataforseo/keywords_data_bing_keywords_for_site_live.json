@@ -1,0 +1,8 @@
+{
+  "use_params": [
+    "target",
+    "location_code",
+    "language_code"
+  ],
+  "params": {}
+}

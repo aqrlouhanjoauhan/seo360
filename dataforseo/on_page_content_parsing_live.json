@@ -1,0 +1,20 @@
+{
+  "use_params": [
+    "url",
+    "enable_javascript",
+    "enable_browser_rendering",
+    "store_raw_html"
+  ],
+  "params": {
+    "markdown_view": {
+      "type": "boolean",
+      "description": "Returns parsed page content formatted as clean Markdown (ideal for feeding directly into LLMs). Use <code>true</code> or <code>false</code>.",
+      "default": true
+    },
+    "browser_preset": {
+      "type": "string",
+      "description": "Device viewport preset for browser rendering. Values: <code>desktop</code>, <code>mobile</code>, <code>tablet</code>.",
+      "default": "desktop"
+    }
+  }
+}

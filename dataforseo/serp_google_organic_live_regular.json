@@ -3,8 +3,10 @@
     "keyword",
     "location_code",
     "language_code",
-    "target",
+    "device",
+    "os",
     "depth",
-    "device"
-  ]
+    "target"
+  ],
+  "params": {}
 }

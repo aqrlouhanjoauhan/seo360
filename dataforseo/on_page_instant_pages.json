@@ -1,0 +1,11 @@
+{
+  "use_params": [
+    "url",
+    "enable_javascript",
+    "enable_browser_rendering",
+    "load_resources",
+    "store_raw_html",
+    "custom_user_agent"
+  ],
+  "params": {}
+}

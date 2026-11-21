@@ -1,0 +1,10 @@
+{
+  "use_params": [
+    "target",
+    "location_code",
+    "language_code",
+    "include_clickstream_data",
+    "include_serp_info"
+  ],
+  "params": {}
+}

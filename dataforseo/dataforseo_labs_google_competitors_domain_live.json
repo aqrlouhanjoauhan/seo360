@@ -1,0 +1,11 @@
+{
+  "use_params": [
+    "target",
+    "location_code",
+    "language_code",
+    "filters",
+    "order_by",
+    "limit"
+  ],
+  "params": {}
+}

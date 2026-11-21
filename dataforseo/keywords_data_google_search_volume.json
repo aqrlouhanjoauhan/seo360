@@ -2,6 +2,9 @@
   "use_params": [
     "keywords",
     "location_code",
-    "language_code"
-  ]
+    "language_code",
+    "include_clickstream_data",
+    "include_serp_info"
+  ],
+  "params": {}
 }

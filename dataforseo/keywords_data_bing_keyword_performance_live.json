@@ -1,0 +1,10 @@
+{
+  "use_params": [
+    "keywords",
+    "location_code",
+    "language_code",
+    "date_from",
+    "date_to"
+  ],
+  "params": {}
+}
