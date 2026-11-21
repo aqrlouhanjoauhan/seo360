@@ -4,22 +4,5 @@
     "limit",
     "filters",
     "order_by"
-  ],
-  "params": {
-    "technology": {
-      "type": "string",
-      "description": "Filter by specific web technology name, e.g. <code>WordPress</code>, <code>Shopify</code>, <code>React</code>.",
-      "default": ""
-    },
-    "technology_group": {
-      "type": "string",
-      "description": "Filter by technology group, e.g. <code>Web development</code>, <code>Marketing</code>, <code>Sales</code>.",
-      "default": ""
-    },
-    "technology_category": {
-      "type": "string",
-      "description": "Filter by technology category, e.g. <code>CMS</code>, <code>Ecommerce</code>, <code>Analytics</code>.",
-      "default": ""
-    }
-  }
+  ]
 }

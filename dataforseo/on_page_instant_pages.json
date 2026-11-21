@@ -6,6 +6,5 @@
     "load_resources",
     "store_raw_html",
     "custom_user_agent"
-  ],
-  "params": {}
+  ]
 }

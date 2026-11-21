@@ -3,12 +3,5 @@
     "keywords",
     "location_code",
     "language_code"
-  ],
-  "params": {
-    "se_type": {
-      "type": "string",
-      "description": "Search engine type for Labs analysis. Default is <code>google</code>.",
-      "default": "google"
-    }
-  }
+  ]
 }

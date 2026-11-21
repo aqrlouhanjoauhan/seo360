@@ -4,17 +4,5 @@
     "filters",
     "order_by",
     "limit"
-  ],
-  "params": {
-    "exclude_internal_backlinks": {
-      "type": "boolean",
-      "description": "Excludes internal links from the target domain itself. Use <code>true</code> to exclude or <code>false</code> to include.",
-      "default": true
-    },
-    "rank_scale": {
-      "type": "string",
-      "description": "Domain rank scale calculation method. Values: <code>one_hundred</code> (0–100) or <code>one_thousand</code> (0–1000).",
-      "default": "one_hundred"
-    }
-  }
+  ]
 }

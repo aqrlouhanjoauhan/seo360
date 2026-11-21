@@ -3,16 +3,6 @@
     "target",
     "location_code",
     "language_code",
-    "item_types",
-    "filters",
-    "order_by",
     "limit"
-  ],
-  "params": {
-    "load_rank_absolute": {
-      "type": "boolean",
-      "description": "Include absolute SERP position in results: <code>true</code> (default) or <code>false</code>",
-      "default": true
-    }
-  }
+  ]
 }

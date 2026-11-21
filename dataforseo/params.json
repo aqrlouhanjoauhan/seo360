@@ -338,5 +338,85 @@
     "type": "boolean",
     "description": "Returns chart or historical visualization data when supported. Use <code>true</code> to include charts or <code>false</code> to omit.",
     "default": false
+  },
+  "bid": {
+    "type": "number",
+    "description": "Maximum bid value used for paid search data. Values: a positive numeric bid amount in the supported currency.",
+    "default": 5
+  },
+  "browser_preset": {
+    "type": "string",
+    "description": "Browser screen preset used when rendering a page. Values: <code>desktop</code>, <code>mobile</code>, <code>tablet</code>.",
+    "default": "desktop"
+  },
+  "categories": {
+    "type": "array",
+    "description": "Target business or technology category identifiers used to filter listings. Example: <code>[\"Restaurant\"]</code> or <code>[\"payment_processors\"]</code>.",
+    "default": "[]"
+  },
+  "exclude_internal_backlinks": {
+    "type": "boolean",
+    "description": "Excludes backlinks between pages on the same domain from backlink results.",
+    "default": true
+  },
+  "keyword_fields": {
+    "type": "array",
+    "description": "Page fields searched for keyword citations. Common values: <code>title</code>, <code>main_title</code>, <code>previous_title</code>, <code>snippet</code>.",
+    "default": "[\"title\", \"snippet\"]"
+  },
+  "load_rank_absolute": {
+    "type": "boolean",
+    "description": "Returns ranking distribution based on the absolute SERP position across all result elements.",
+    "default": true
+  },
+  "markdown_view": {
+    "type": "boolean",
+    "description": "Returns parsed page content in Markdown format in the <code>page_as_markdown</code> field.",
+    "default": true
+  },
+  "match": {
+    "type": "string",
+    "description": "Specifies how a keyword or search term should match the target data. Values: <code>exact</code>, <code>phrase</code>, <code>broad</code>.",
+    "default": "exact"
+  },
+  "page_type": {
+    "type": "array",
+    "description": "Types of web pages to include in content analysis. Common values: <code>ecommerce</code>, <code>news</code>, <code>blogs</code>, <code>message-boards</code>.",
+    "default": "[\"blogs\", \"news\"]"
+  },
+  "rank_scale": {
+    "type": "string",
+    "description": "Defines the scale used to calculate or represent ranking values. Values: <code>one_hundred</code> (0–100), <code>one_thousand</code> (0–1000).",
+    "default": "one_hundred"
+  },
+  "se_type": {
+    "type": "string",
+    "description": "Specifies the search engine type used for retrieving search data. Common values: <code>google</code>, <code>bing</code>, <code>yahoo</code>, <code>youtube</code>, <code>amazon</code>.",
+    "default": "google"
+  },
+  "search_mode": {
+    "type": "string",
+    "description": "Specifies the search matching mode used to find results. Values: <code>as_is</code>, <code>one_per_domain</code>.",
+    "default": "as_is"
+  },
+  "technology": {
+    "type": "string",
+    "description": "Name of a specific technology used to filter results. Common values: <code>WordPress</code>, <code>Nginx</code>, <code>Salesforce</code>.",
+    "default": ""
+  },
+  "technology_category": {
+    "type": "string",
+    "description": "Identifier of the technology category used to filter technology data. Common values: <code>cms</code>, <code>crm</code>, <code>web_servers</code>, <code>payment_processors</code>.",
+    "default": ""
+  },
+  "technology_group": {
+    "type": "string",
+    "description": "Identifier of the technology group used to filter technology data. Common values: <code>content</code>, <code>marketing</code>, <code>sales</code>, <code>web_development</code>.",
+    "default": ""
+  },
+  "type": {
+    "type": "string",
+    "description": "Specifies the type of data source, result, or request being processed. Common values: <code>web</code>, <code>news</code>, <code>youtube</code>, <code>images</code>, <code>froogle</code>.",
+    "default": "web"
   }
 }

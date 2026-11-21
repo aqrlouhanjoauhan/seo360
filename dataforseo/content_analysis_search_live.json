@@ -4,22 +4,5 @@
     "filters",
     "order_by",
     "limit"
-  ],
-  "params": {
-    "keyword_fields": {
-      "type": "array",
-      "description": "Page fields searched for keyword citations. Common values: <code>title</code>, <code>main_title</code>, <code>previous_title</code>, <code>snippet</code>.",
-      "default": "[\"title\", \"snippet\"]"
-    },
-    "page_type": {
-      "type": "array",
-      "description": "Types of web pages to include in content analysis. Common values: <code>ecommerce</code>, <code>news</code>, <code>blogs</code>, <code>message-boards</code>.",
-      "default": "[\"blogs\", \"news\"]"
-    },
-    "search_mode": {
-      "type": "string",
-      "description": "Search matching mode for citations. Values: <code>as_is</code> or <code>one_per_domain</code>.",
-      "default": "as_is"
-    }
-  }
+  ]
 }

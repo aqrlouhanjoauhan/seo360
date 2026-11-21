@@ -7,6 +7,5 @@
     "limit",
     "backlinks_status_type",
     "include_subdomains"
-  ],
-  "params": {}
+  ]
 }

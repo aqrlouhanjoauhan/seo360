@@ -6,6 +6,5 @@
     "filters",
     "order_by",
     "limit"
-  ],
-  "params": {}
+  ]
 }

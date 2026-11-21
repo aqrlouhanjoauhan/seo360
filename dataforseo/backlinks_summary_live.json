@@ -3,12 +3,5 @@
     "target",
     "include_subdomains",
     "backlinks_status_type"
-  ],
-  "params": {
-    "rank_scale": {
-      "type": "string",
-      "description": "Domain rank scale calculation method. Values: <code>one_hundred</code> (0–100) or <code>one_thousand</code> (0–1000).",
-      "default": "one_hundred"
-    }
-  }
+  ]
 }
