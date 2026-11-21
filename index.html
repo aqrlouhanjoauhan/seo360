@@ -203,63 +203,70 @@
 
     .hero p {
       max-width: 680px;
-      margin: 0 auto 30px;
+      margin: 0 auto 28px;
       font-size: 1.05rem;
       color: var(--text-muted);
       line-height: 1.65;
     }
 
-    /* Tools Directory & Search */
+    /* Official Template Spotlight Banner */
+    .official-spotlight {
+      margin-bottom: 22px;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.12) 0%, rgba(16, 185, 129, 0.12) 100%);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: 14px;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .official-spotlight-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .official-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(56, 189, 248, 0.16);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      color: var(--accent-blue);
+      font-size: 0.75rem;
+      font-weight: 700;
+      font-family: ui-monospace, SFMono-Regular, monospace;
+      flex-shrink: 0;
+    }
+
+    .official-spotlight-copy h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 2px;
+    }
+
+    .official-spotlight-copy p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    /* Flagship Extension Showcase */
     .tools-section {
       padding-bottom: 60px;
     }
 
-    .search-wrapper {
-      position: relative;
-      margin-bottom: 20px;
-    }
-
-    .search-input {
-      width: 100%;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--card-border);
-      border-radius: 10px;
-      padding: 13px 18px 13px 44px;
-      color: #fff;
-      font-size: 0.92rem;
-      outline: none;
-      transition: all 0.2s ease;
-    }
-
-    .search-input:focus {
-      border-color: var(--accent);
-      background: rgba(255, 255, 255, 0.05);
-    }
-
-    .search-icon {
-      position: absolute;
-      left: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--text-muted);
-      width: 18px;
-      height: 18px;
-      pointer-events: none;
-    }
-
-    /* Tools List */
-    .tools-scroll-box {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    /* Tool Item Card */
     .tool-item {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 14px;
-      padding: 22px 26px;
+      padding: 24px 28px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -278,8 +285,8 @@
     }
 
     .tool-icon-img {
-      width: 48px;
-      height: 48px;
+      width: 52px;
+      height: 52px;
       border-radius: 12px;
       object-fit: cover;
       flex-shrink: 0;
@@ -295,7 +302,7 @@
     }
 
     .tool-info h3 {
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       font-weight: 700;
       color: #fff;
       margin-bottom: 6px;
@@ -334,23 +341,15 @@
 
     .tool-info p {
       color: var(--text-muted);
-      font-size: 0.88rem;
-      line-height: 1.5;
-      max-width: 580px;
+      font-size: 0.9rem;
+      line-height: 1.55;
+      max-width: 600px;
     }
 
     .tool-actions {
       display: flex;
       gap: 10px;
       flex-shrink: 0;
-    }
-
-    .no-results {
-      text-align: center;
-      padding: 40px;
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      display: none;
     }
 
     /* Authority Section */
@@ -515,6 +514,8 @@
     @media (max-width: 768px) {
       .hero { padding-top: 105px; }
       .nav-links a.nav-item { display: none; }
+      .official-spotlight { flex-direction: column; align-items: flex-start; }
+      .official-spotlight .btn { width: 100%; }
       .tool-item { flex-direction: column; align-items: flex-start; }
       .tool-actions { width: 100%; }
       .tool-actions .btn { width: 100%; text-align: center; }
@@ -542,7 +543,8 @@
         <span>SEO360</span>
       </a>
       <div class="nav-links">
-        <a href="#directory" class="nav-item">Extensions</a>
+        <a href="#extension" class="nav-item">Extension</a>
+        <a href="https://dataforseo.com/templates/test-dataforseo-api-endpoints-seo360/" target="_blank" rel="noopener noreferrer" class="nav-item">Official Template</a>
         <a href="#why-raw-data" class="nav-item">Why DataForSEO?</a>
         <a href="#how-it-works" class="nav-item">How It Works</a>
       </div>
@@ -567,110 +569,53 @@
       </p>
     </div>
 
-    <!-- Tools Directory Area -->
-    <div id="directory" class="container tools-section">
-      <!-- Search Filter -->
-      <div class="search-wrapper">
-        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="11" cy="11" r="8"></circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
-        <input type="text" id="toolSearch" class="search-input" placeholder="Search tools or endpoints..." autocomplete="off">
+    <!-- SEO360 Extension Showcase -->
+    <div id="extension" class="container tools-section">
+      <!-- Prominent Official Template Gallery Listing Banner -->
+      <div class="official-spotlight">
+        <div class="official-spotlight-left">
+          <span class="official-pill">OFFICIAL TEMPLATE</span>
+			<div class="official-spotlight-copy">
+			  <h2>SEO360 is listed on the DataForSEO Template Gallery</h2>
+			  <p>Officially recognized by DataForSEO, so you can test endpoints with complete confidence.</p>
+			</div>
+        </div>
+        <a href="https://dataforseo.com/templates/test-dataforseo-api-endpoints-seo360/"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="btn btn-secondary">
+          View on DataForSEO Templates ↗
+        </a>
       </div>
 
-      <!-- Tools List -->
-      <div id="toolsList" class="tools-scroll-box">
-
-        <!-- Tool 1: SEO360 (Flagship Console) -->
-        <div class="tool-item featured" id="tool-seo360" data-tags="seo360 dataforseo api client test tool tester serp debugger keyword ideas backlinks cpc json tree export raw data query python nodejs snippet byok">
-          <div class="tool-left">
-            <img src="https://lh3.googleusercontent.com/GHIpRJ2xMxJ3SssvChRks2Kd-vTMbR0xKupoV823dclCtB15cHVnRBPniknz9MZ3N4elSOc-8YVSsZGhOGaYzLlU=s120" alt="SEO360 Extension Icon" class="tool-icon-img" width="48" height="48" loading="lazy">
-            <div class="tool-info">
-              <h3>
-                <a href="https://chromewebstore.google.com/detail/mpphhakiifalmlkphalklimjfkhkpbmp" target="_blank" rel="noopener">
-                  SEO360: DataForSEO Free No-Code API Test Tool
-                </a>
-                <span class="badge-status flagship">Main Tool</span>
-              </h3>
-              <p>Visual testing workbench for DataForSEO. Test live Google SERPs, search volume, competitor keywords, or any custom API endpoint. View response JSON trees, render nested tables, export raw SEO query data, and generate runnable code (Python, Node.js, cURL).</p>
-            </div>
-          </div>
-          <div class="tool-actions">
-            <a href="https://chromewebstore.google.com/detail/seo360-dataforseo-free-no/mpphhakiifalmlkphalklimjfkhkpbmp" 
-               target="_blank" 
-               rel="noopener" 
-               class="btn btn-primary">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                <polyline points="15 3 21 3 21 9"></polyline>
-                <line x1="10" y1="14" x2="21" y2="3"></line>
-              </svg>
-              Add to Chrome
-            </a>
+      <!-- SEO360 Card -->
+      <div class="tool-item featured" id="tool-seo360">
+        <div class="tool-left">
+          <img src="https://lh3.googleusercontent.com/GHIpRJ2xMxJ3SssvChRks2Kd-vTMbR0xKupoV823dclCtB15cHVnRBPniknz9MZ3N4elSOc-8YVSsZGhOGaYzLlU=s120" alt="SEO360 Extension Icon" class="tool-icon-img" width="52" height="52" loading="lazy">
+          <div class="tool-info">
+            <h3>
+              <a href="https://chromewebstore.google.com/detail/mpphhakiifalmlkphalklimjfkhkpbmp" target="_blank" rel="noopener">
+                SEO360: DataForSEO Free No-Code API Test Tool
+              </a>
+              <span class="badge-status flagship">Chrome Extension</span>
+            </h3>
+            <p>Visual testing workbench for DataForSEO. Officially featured on the DataForSEO Template Gallery. Test live Google SERPs, search volume, competitor keywords, or any custom API endpoint. View response JSON trees, render nested tables, export raw SEO query data, and generate runnable code (Python, Node.js, cURL).</p>
           </div>
         </div>
-        
-        <!-- Tool 2: Competitor Keyword Finder (Active) -->
-        <div class="tool-item" id="tool-ckfinder" data-tags="competitor keywords traffic ranking serp dataforseo search volume">
-          <div class="tool-left">
-            <img src="https://lh3.googleusercontent.com/lCW3TpYdC6LDv8VEDzPvBr1N3ah-fX3zonQR-jm07LOoWwtbMxKcXxHyRLvJuw4spF9kTSBkgeRZpng5R0y4hkaA7aw=s120" alt="Competitor Keyword Finder Icon" class="tool-icon-img" width="48" height="48" loading="lazy">
-            <div class="tool-info">
-              <h3>
-                <a href="https://chromewebstore.google.com/detail/competitor-keyword-finder/mmcajkhbkkhmcbaabeajefkdaciohodc" target="_blank" rel="noopener">
-                  Competitor Keyword Finder
-                </a>
-                <span class="badge-status">Active</span>
-              </h3>
-              <p>Enter any domain to get ranking keywords and search volume. Includes intent tagging, opportunity metrics, and instant raw dataset export across Google international regions.</p>
-            </div>
-          </div>
-          <div class="tool-actions">
-            <a href="https://chromewebstore.google.com/detail/competitor-keyword-finder/mmcajkhbkkhmcbaabeajefkdaciohodc" 
-               target="_blank" 
-               rel="noopener" 
-               class="btn btn-primary">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                <polyline points="15 3 21 3 21 9"></polyline>
-                <line x1="10" y1="14" x2="21" y2="3"></line>
-              </svg>
-              Add to Chrome
-            </a>
-          </div>
+        <div class="tool-actions">
+          <a href="https://chromewebstore.google.com/detail/seo360-dataforseo-free-no/mpphhakiifalmlkphalklimjfkhkpbmp" 
+             target="_blank" 
+             rel="noopener" 
+             class="btn btn-primary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15 3 21 3 21 9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+            Add to Chrome
+          </a>
         </div>
-
-        <!-- Tool 3: Compare 2 Websites SEO (Active) -->
-        <div class="tool-item" id="tool-compare" data-tags="compare seo competitor rankings keywords on-page">
-          <div class="tool-left">
-            <img src="https://lh3.googleusercontent.com/nlj52G7AqJnriE98K0u2QOWkrjQmm2mV6-KWoBjRDk0JhUzKI3R4v6nrbLS8UvdvmOZaE9IZ7LuJ7UE3P6_q8JY=s120" alt="Compare 2 Websites SEO Icon" class="tool-icon-img" width="48" height="48" loading="lazy">
-            <div class="tool-info">
-              <h3>
-                <a href="https://chromewebstore.google.com/detail/compare-2-websites-seo-co/mfoehhkaioagppbbbknhehglkeidncco" target="_blank" rel="noopener">
-                  Compare 2 Websites SEO
-                </a>
-                <span class="badge-status">Active</span>
-              </h3>
-              <p>Compare two websites head-to-head. Inspect headings and content differences on-page, paired with live keyword rankings and SERP position comparisons.</p>
-            </div>
-          </div>
-          <div class="tool-actions">
-            <a href="https://chromewebstore.google.com/detail/compare-2-websites-seo-co/mfoehhkaioagppbbbknhehglkeidncco" 
-               target="_blank" 
-               rel="noopener" 
-               class="btn btn-primary">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                <polyline points="15 3 21 3 21 9"></polyline>
-                <line x1="10" y1="14" x2="21" y2="3"></line>
-              </svg>
-              Add to Chrome
-            </a>
-          </div>
-        </div>
-
       </div>
-
-      <div id="noResults" class="no-results">No matching tools found.</div>
     </div>
 
     <!-- DataForSEO Authority Section -->
@@ -743,6 +688,7 @@
     <div class="container footer-inner">
       <div>&copy; <span id="currentYear"></span> SEO360. All rights reserved.</div>
       <div class="footer-links">
+        <a href="https://dataforseo.com/templates/test-dataforseo-api-endpoints-seo360/" target="_blank" rel="noopener noreferrer">DataForSEO Template</a>
         <a href="https://github.com/aqrlouhanjoauhan/seo360" target="_blank" rel="noopener noreferrer">GitHub</a>
         <a href="/privacy.html">Privacy Policy</a>
       </div>
@@ -763,41 +709,7 @@
       }
     }
 
-    // 2. 实时过滤工具列表
-    const searchInput = document.getElementById('toolSearch');
-    const toolItems = document.querySelectorAll('.tool-item');
-    const emptyState = document.getElementById('noResults');
-
-    function filterTools(query) {
-      const q = query.toLowerCase().trim();
-      let visibleCount = 0;
-
-      toolItems.forEach(item => {
-        const text = item.textContent.toLowerCase();
-        const tags = item.getAttribute('data-tags') || '';
-        if (!q || text.includes(q) || tags.includes(q)) {
-          item.style.display = 'flex';
-          visibleCount++;
-        } else {
-          item.style.display = 'none';
-        }
-      });
-
-      emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
-    }
-
-    searchInput.addEventListener('input', (e) => {
-      filterTools(e.target.value);
-    });
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const toolParam = urlParams.get('tool');
-    if (toolParam) {
-      searchInput.value = toolParam;
-      filterTools(toolParam);
-    }
-
-    // 3. 动态注入推广链接与社区链接
+    // 2. 动态注入推广链接与社区链接
     let cachedAffiliateUrl = '';
 
     async function initDataForSeoBaseConfig() {
@@ -832,11 +744,11 @@
               a.rel = 'noopener noreferrer';
               fragment.appendChild(a);
             });
-            const githubLink = footerLinks.querySelector('a');
+            const githubLink = footerLinks.querySelector('a[href*="github.com"]');
             if (githubLink && githubLink.nextSibling) {
               footerLinks.insertBefore(fragment, githubLink.nextSibling);
             } else {
-              footerLinks.prepend(fragment);
+              footerLinks.appendChild(fragment);
             }
           }
         }
