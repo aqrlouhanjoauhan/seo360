@@ -2,6 +2,10 @@
   "affiliate_url": "https://try.dataforseo.com/seo360",
   "community_links": [
     {
+      "name":"SEO360 MCP",
+      "url":"https://www.npmjs.com/package/seo360-mcp"
+    },
+    {
       "name": "Ask DataForSEO AI",
       "url": "https://chat.dataforseo.com/"
     },
