@@ -352,6 +352,70 @@
       flex-shrink: 0;
     }
 
+    /* Compact MCP Section */
+    .mcp-section {
+      padding: 56px 0;
+      border-top: 1px solid var(--card-border);
+    }
+
+    .mcp-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 24px 28px;
+    }
+
+    .mcp-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .mcp-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .mcp-title-wrap h2 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .mcp-title-wrap h2 a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .mcp-title-wrap h2 a:hover {
+      color: var(--accent);
+    }
+
+    .mcp-desc {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+      max-width: 720px;
+    }
+
+    .mcp-code {
+      background: rgba(0, 0, 0, 0.45);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.8rem;
+      color: #cbd5e1;
+      overflow-x: auto;
+      line-height: 1.55;
+    }
+
     /* Authority Section */
     .authority-section {
       padding: 56px 0;
@@ -544,6 +608,7 @@
       </a>
       <div class="nav-links">
         <a href="#extension" class="nav-item">Extension</a>
+        <a href="#mcp" class="nav-item">MCP</a>
         <a href="https://dataforseo.com/templates/test-dataforseo-api-endpoints-seo360/" target="_blank" rel="noopener noreferrer" class="nav-item">Official Template</a>
         <a href="#why-raw-data" class="nav-item">Why DataForSEO?</a>
         <a href="#how-it-works" class="nav-item">How It Works</a>
@@ -615,6 +680,40 @@
             Add to Chrome
           </a>
         </div>
+      </div>
+    </div>
+
+    <!-- Compact MCP Section -->
+    <div id="mcp" class="container mcp-section">
+      <div class="mcp-box">
+        <div class="mcp-header">
+          <div class="mcp-title-wrap">
+            <h2>
+              <a href="https://www.npmjs.com/package/seo360-mcp" target="_blank" rel="noopener noreferrer">
+                SEO360 MCP Server
+              </a>
+            </h2>
+            <span class="badge-status">AI / MCP</span>
+          </div>
+          <a href="https://www.npmjs.com/package/seo360-mcp" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+            View on npm ↗
+          </a>
+        </div>
+        <p class="mcp-desc">
+          Import an SEO360 extension preset pack and let AI clients (Claude Desktop, Cursor, Cherry Studio, etc.) modify or add custom parameters while preventing hallucination.
+        </p>
+        <pre class="mcp-code"><code>{
+  "mcpServers": {
+    "seo360-mcp": {
+      "command": "npx",
+      "args": ["-y", "seo360-mcp"],
+      "env": {
+        "DATAFORSEO_LOGIN": "your_dataforseo_email",
+        "DATAFORSEO_PASSWORD": "your_dataforseo_api_password"
+      }
+    }
+  }
+}</code></pre>
       </div>
     </div>
 
