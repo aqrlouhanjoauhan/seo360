@@ -1,0 +1,35 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.aqrlouhanjoauhan/seo360-mcp",
+  "description": "Import JSON presets, edit params via AI, and run exact DataForSEO API calls with zero hallucination.",
+  "repository": {
+    "url": "https://github.com/aqrlouhanjoauhan/seo360",
+    "source": "github",
+    "subfolder": "mcp"
+  },
+  "version": "1.0.14",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "seo360-mcp",
+      "version": "1.0.13",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "DATAFORSEO_LOGIN",
+          "description": "DataForSEO API login email",
+          "isRequired": true,
+          "isSecret": false
+        },
+        {
+          "name": "DATAFORSEO_PASSWORD",
+          "description": "DataForSEO API password",
+          "isRequired": true,
+          "isSecret": true
+        }
+      ]
+    }
+  ]
+}

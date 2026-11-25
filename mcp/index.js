@@ -5,7 +5,7 @@ import { z } from "zod";
 
 const server = new McpServer({
     name: "seo360-mcp",
-    version: "1.9.0",
+    version: "1.0.14",
 });
 
 const EXTENSION_STORE_URL = "https://chromewebstore.google.com/detail/seo360-dataforseo-free-no/mpphhakiifalmlkphalklimjfkhkpbmp";
@@ -13,10 +13,13 @@ const OFFICIAL_DATAFORSEO_AI_URL = "https://chat.dataforseo.com/";
 
 const STRICT_BOUNDARY_RULE = `
 [STRICT RULES — DO NOT VIOLATE]
-1. PRESET PACK REQUIRED FIRST: You must import an authentic SEO360 JSON preset pack (single-endpoint or multi-endpoint compound preset array of {"note", "api", "payload"}) via \`import_seo360_preset\` before any preset operation works.
-2. EXTENSION LINK & PRESET EXPORT: The SEO360 Chrome Extension link is ${EXTENSION_STORE_URL}. Never say you do not have the extension link. Do not assemble, combine, synthesize, or guess preset packs on the user's behalf.
+1. USER-SUPPLIED INPUT ONLY (NEVER AI-GENERATED): Tasks can ONLY enter this server in two ways:
+   (a) User imports or pastes an authentic SEO360 JSON preset pack ([{"note", "api", "payload"}]) via \`import_seo360_preset\`.
+   (b) User explicitly provides BOTH an exact DataForSEO v3 endpoint (\`api\`) AND concrete parameter key-values (\`params_json\`) via \`create_user_task\`.
+   NEVER generate, assemble, synthesize, or guess endpoints, preset packs, or parameters on the user's behalf.
+2. EXTENSION LINK: The SEO360 Chrome Extension link is ${EXTENSION_STORE_URL}. Never say you do not have the extension link.
 3. NEVER TEACH OR EXPLAIN ENDPOINTS/PARAMETERS/VALUES: Do not explain what an endpoint means, how to configure parameters, or what values to write. Whenever anything is unclear or not understood, direct the user directly to DataForSEO Official AI (${OFFICIAL_DATAFORSEO_AI_URL}).
-4. CREDENTIALS & BUDGET PROTECTION: DataForSEO credentials live in this local MCP server's environment variables. Never execute a live preset API request without clear user agreement, and always track request count, per-request cost, and cumulative USD cost.
+4. CREDENTIALS & BUDGET PROTECTION: DataForSEO credentials live in this local MCP server's environment variables. Never execute a live API request without clear user agreement (\`user_agreed: true\`), and always track request count, per-request cost, and cumulative USD cost.
 `.trim();
 
 const presetStore = new Map();
@@ -49,11 +52,6 @@ function payloadPairsToObject(payloadPairs) {
     return obj;
 }
 
-/**
- * Normalize parameter values for DataForSEO JSON request payload:
- * - Primitive types (string / number / boolean / null / undefined): sent directly
- * - Arrays or plain objects: sent as JSON structures (parsed if passed as a valid JSON array/object string)
- */
 function normalizeValueForJsonPayload(val) {
     if (val !== null && typeof val === "object") {
         return val;
@@ -111,13 +109,13 @@ function formatUsd(amount) {
     return `$${num.toFixed(6)} USD`;
 }
 
-function requireImportedPresetsResponse() {
+function requireLoadedTasksResponse() {
     return {
         isError: true,
         content: [
             {
                 type: "text",
-                text: `Preset pack required first: Import an SEO360 JSON preset pack (single-endpoint or multi-endpoint compound pack) via \`import_seo360_preset\` before performing any preset operation.\n- SEO360 Chrome Extension link: ${EXTENSION_STORE_URL}\n- Do not ask the AI to assemble a preset pack; for endpoint meanings, parameter configuration, or how to write values, consult DataForSEO Official AI: ${OFFICIAL_DATAFORSEO_AI_URL}`,
+                text: `No tasks loaded yet. You must first either:\n1. Import or paste an SEO360 JSON preset pack via \`import_seo360_preset\`, OR\n2. Provide an exact DataForSEO endpoint and concrete parameters yourself via \`create_user_task\`.\n- AI must NEVER generate or assemble presets/parameters on your behalf.\n- SEO360 Chrome Extension: ${EXTENSION_STORE_URL}\n- For endpoint or parameter questions, consult DataForSEO Official AI: ${OFFICIAL_DATAFORSEO_AI_URL}`,
             },
         ],
     };
@@ -133,12 +131,12 @@ function formatRawParams(paramsObj) {
         .join("\n");
 }
 
-// Tool 1: Import single or multi-endpoint compound SEO360 preset pack
+// Tool 1: Import or paste a user-provided SEO360 JSON preset pack
 server.tool(
     "import_seo360_preset",
-    `Import a user-provided SEO360 JSON preset pack (single-endpoint or multi-endpoint compound preset array of {"note", "api", "payload"}). Must be imported before any preset operation works. SEO360 Chrome Extension link: ${EXTENSION_STORE_URL}. NEVER assemble, combine, or guess preset packs yourself. Do NOT teach endpoint meanings, parameter configuration, or value formats—direct anything unclear to DataForSEO Official AI (${OFFICIAL_DATAFORSEO_AI_URL}).\n\n${STRICT_BOUNDARY_RULE}`,
+    `Import or paste a user-provided SEO360 JSON preset pack (single-endpoint or multi-endpoint compound array of {"note", "api", "payload"}). The user may read a local preset file or paste the raw JSON directly. NEVER generate, assemble, combine, or guess preset packs yourself. SEO360 Chrome Extension link: ${EXTENSION_STORE_URL}. Do NOT teach endpoint meanings, parameter configuration, or value formats—direct anything unclear to DataForSEO Official AI (${OFFICIAL_DATAFORSEO_AI_URL}).\n\n${STRICT_BOUNDARY_RULE}`,
     {
-        preset_json: z.string().describe("Verbatim JSON array string exported by the user (single or compound pack). Never assemble or generate it."),
+        preset_json: z.string().describe("Verbatim JSON array string imported from file or pasted directly by the user. AI must NEVER generate or assemble it."),
         prefix: z.string().optional().describe("Optional prefix to avoid task name collisions across multiple imported packs"),
     },
     async ({ preset_json, prefix }) => {
@@ -152,7 +150,7 @@ server.tool(
                     content: [
                         {
                             type: "text",
-                            text: `Invalid preset JSON: Must be a non-empty JSON array. SEO360 Chrome Extension: ${EXTENSION_STORE_URL}. Do not assemble preset packs manually or with AI. For endpoint meanings, parameter setup, or value formats, refer to DataForSEO Official AI: ${OFFICIAL_DATAFORSEO_AI_URL}`,
+                            text: `Invalid preset JSON: Must be a non-empty JSON array imported or pasted by the user. SEO360 Chrome Extension: ${EXTENSION_STORE_URL}. AI must never generate or assemble preset packs. For endpoint or parameter help, consult DataForSEO Official AI: ${OFFICIAL_DATAFORSEO_AI_URL}`,
                         },
                     ],
                 };
@@ -181,6 +179,7 @@ server.tool(
                     api: normalizedApi,
                     note: baseName,
                     params: paramsObj,
+                    source: "preset",
                 });
 
                 importedSummaries.push(
@@ -194,7 +193,7 @@ server.tool(
                     content: [
                         {
                             type: "text",
-                            text: `No valid preset tasks found. Each entry requires "note", "api", and a 2D array "payload". SEO360 Chrome Extension: ${EXTENSION_STORE_URL}. Do not assemble presets yourself. For endpoint meanings, parameter setup, or value formats, consult DataForSEO Official AI: ${OFFICIAL_DATAFORSEO_AI_URL}`,
+                            text: `No valid preset tasks found. Each entry requires "note", "api", and a 2D array "payload". SEO360 Chrome Extension: ${EXTENSION_STORE_URL}. AI must never generate or assemble presets. For endpoint or parameter help, consult DataForSEO Official AI: ${OFFICIAL_DATAFORSEO_AI_URL}`,
                         },
                     ],
                 };
@@ -220,7 +219,7 @@ server.tool(
                 content: [
                     {
                         type: "text",
-                        text: `Failed to parse preset JSON: ${err.message}. SEO360 Chrome Extension: ${EXTENSION_STORE_URL}. Do not assemble preset packs yourself. For endpoint meanings, parameter setup, or value formats, consult DataForSEO Official AI: ${OFFICIAL_DATAFORSEO_AI_URL}`,
+                        text: `Failed to parse preset JSON: ${err.message}. SEO360 Chrome Extension: ${EXTENSION_STORE_URL}. AI must never generate or assemble preset packs. For endpoint or parameter help, consult DataForSEO Official AI: ${OFFICIAL_DATAFORSEO_AI_URL}`,
                     },
                 ],
             };
@@ -228,17 +227,97 @@ server.tool(
     }
 );
 
-// Tool 2: Update parameters on an already-imported preset task
+// Tool 2: Register a custom task ONLY when the user explicitly provides BOTH an exact endpoint and concrete parameters
+server.tool(
+    "create_user_task",
+    `Create a task in memory ONLY when the user has explicitly provided BOTH an exact DataForSEO v3 endpoint (\`api\`) AND concrete parameter key-values (\`params_json\`). STRICTLY FORBIDDEN for the AI to call this tool with guessed, inferred, or self-generated endpoints or parameters. If the user has not supplied both an exact endpoint and concrete parameters, refuse and tell them to import/paste an SEO360 preset pack (${EXTENSION_STORE_URL}) or consult DataForSEO Official AI (${OFFICIAL_DATAFORSEO_AI_URL}).\n\n${STRICT_BOUNDARY_RULE}`,
+    {
+        task_name: z.string().describe("Task label specified by the user (or derived strictly from the user's endpoint)"),
+        api: z.string().describe("Exact DataForSEO v3 endpoint path explicitly provided by the user (e.g. 'serp/google/organic/live/advanced'). Never guessed by AI."),
+        params_json: z.string().describe("Non-empty JSON object of concrete parameter key-values explicitly provided by the user. Never generated or guessed by AI."),
+        user_provided_exact_spec: z.boolean().describe("Must be true ONLY if the user literally provided both the exact endpoint and concrete parameter key-values in their message"),
+    },
+    async ({ task_name, api, params_json, user_provided_exact_spec }) => {
+        if (!user_provided_exact_spec) {
+            return {
+                isError: true,
+                content: [
+                    {
+                        type: "text",
+                        text: `Rejected: AI is not allowed to generate tasks or parameters on its own. Please either import/paste an SEO360 JSON preset pack (${EXTENSION_STORE_URL}) or provide both the exact DataForSEO endpoint and concrete parameters yourself. For endpoint/parameter guidance, consult DataForSEO Official AI: ${OFFICIAL_DATAFORSEO_AI_URL}`,
+                    },
+                ],
+            };
+        }
+
+        const normalizedApi = String(api || "").trim().replace(/^\/+/, "").replace(/^v3\//, "");
+        if (!normalizedApi) {
+            return {
+                isError: true,
+                content: [
+                    {
+                        type: "text",
+                        text: `Rejected: Missing exact \`api\` endpoint from the user. AI must not guess endpoints. Import/paste an SEO360 preset pack (${EXTENSION_STORE_URL}) or consult DataForSEO Official AI: ${OFFICIAL_DATAFORSEO_AI_URL}`,
+                    },
+                ],
+            };
+        }
+
+        try {
+            const parsedParams = JSON.parse(params_json);
+            if (!parsedParams || typeof parsedParams !== "object" || Array.isArray(parsedParams) || Object.keys(parsedParams).length === 0) {
+                return {
+                    isError: true,
+                    content: [
+                        {
+                            type: "text",
+                            text: `Rejected: \`params_json\` must be a non-empty JSON object of concrete parameters explicitly provided by the user. AI must not invent parameters. Consult DataForSEO Official AI: ${OFFICIAL_DATAFORSEO_AI_URL}`,
+                        },
+                    ],
+                };
+            }
+
+            const cleanName = String(task_name || "").trim() || normalizedApi;
+            presetStore.set(cleanName, {
+                api: normalizedApi,
+                note: cleanName,
+                params: parsedParams,
+                source: "user_explicit",
+            });
+
+            return {
+                content: [
+                    {
+                        type: "text",
+                        text: `Registered user-specified task [${cleanName}] in memory ($0.000000 USD spent). Total loaded tasks: ${presetStore.size}.\n- Endpoint: \`${normalizedApi}\`\n- Parameters:\n${formatRawParams(parsedParams)}`,
+                    },
+                ],
+            };
+        } catch (err) {
+            return {
+                isError: true,
+                content: [
+                    {
+                        type: "text",
+                        text: `Invalid \`params_json\`: ${err.message}. Provide valid JSON parameters explicitly or import/paste an SEO360 preset pack (${EXTENSION_STORE_URL}).`,
+                    },
+                ],
+            };
+        }
+    }
+);
+
+// Tool 3: Update parameters on an already-loaded task
 server.tool(
     "update_seo360_preset",
-    `Update or add parameter values on an ALREADY IMPORTED preset task. Requires a preset pack to be imported first. Primitive values are sent directly; arrays and objects are sent as JSON. Do NOT teach how to configure parameters or write values—direct anything unclear to DataForSEO Official AI (${OFFICIAL_DATAFORSEO_AI_URL}).\n\n${STRICT_BOUNDARY_RULE}`,
+    `Update or add parameter values on an ALREADY LOADED task (imported preset or user-specified task) using values requested by the user. Do NOT invent parameters or teach how to configure values—direct anything unclear to DataForSEO Official AI (${OFFICIAL_DATAFORSEO_AI_URL}).\n\n${STRICT_BOUNDARY_RULE}`,
     {
-        task_name: z.string().describe("Exact task name (`note`) of an already-imported preset task"),
-        updates_json: z.string().describe('JSON object of parameter updates, e.g. {"keyword": "test", "filters": {"field": "value"}}'),
+        task_name: z.string().describe("Exact task name of an already-loaded task"),
+        updates_json: z.string().describe('JSON object of parameter updates requested by the user, e.g. {"keyword": "test"}'),
     },
     async ({ task_name, updates_json }) => {
         if (presetStore.size === 0) {
-            return requireImportedPresetsResponse();
+            return requireLoadedTasksResponse();
         }
 
         const target = presetStore.get(task_name);
@@ -294,18 +373,18 @@ server.tool(
     }
 );
 
-// Tool 3: Delete a preset task, specific parameter keys inside a task, or all imported presets
+// Tool 4: Delete a task, specific parameter keys inside a task, or all loaded tasks
 server.tool(
     "delete_seo360_preset",
-    `Delete an imported preset task, delete specific parameter key(s) inside an imported preset task, or clear all imported presets. Requires a preset pack to be imported first.\n\n${STRICT_BOUNDARY_RULE}`,
+    `Delete a loaded task, delete specific parameter key(s) inside a loaded task, or clear all loaded tasks.\n\n${STRICT_BOUNDARY_RULE}`,
     {
-        delete_scope: z.enum(["params", "task", "all"]).describe('Deletion scope: "params" to remove specific parameter keys from a task, "task" to delete a task, or "all" to clear all imported presets'),
-        task_name: z.string().optional().describe('Target task name (`note`), required when delete_scope is "params" or "task"'),
+        delete_scope: z.enum(["params", "task", "all"]).describe('Deletion scope: "params" to remove specific parameter keys from a task, "task" to delete a task, or "all" to clear all loaded tasks'),
+        task_name: z.string().optional().describe('Target task name, required when delete_scope is "params" or "task"'),
         param_keys: z.array(z.string()).optional().describe('Parameter keys to delete when delete_scope is "params"'),
     },
     async ({ delete_scope, task_name, param_keys }) => {
         if (presetStore.size === 0) {
-            return requireImportedPresetsResponse();
+            return requireLoadedTasksResponse();
         }
 
         if (delete_scope === "all") {
@@ -315,7 +394,7 @@ server.tool(
                 content: [
                     {
                         type: "text",
-                        text: `Cleared all ${count} imported preset task(s). Import a preset pack first before performing other preset operations. SEO360 Chrome Extension: ${EXTENSION_STORE_URL}`,
+                        text: `Cleared all ${count} loaded task(s). Import/paste a preset pack or provide an exact endpoint and parameters first. SEO360 Chrome Extension: ${EXTENSION_STORE_URL}`,
                     },
                 ],
             };
@@ -382,14 +461,14 @@ server.tool(
     }
 );
 
-// Tool 4: List imported preset tasks
+// Tool 5: List loaded tasks
 server.tool(
     "list_seo360_presets",
-    `List currently imported SEO360 preset tasks and their parameters. Requires a preset pack to be imported first.\n\n${STRICT_BOUNDARY_RULE}`,
+    `List currently loaded tasks (imported presets or user-specified tasks) and their parameters.\n\n${STRICT_BOUNDARY_RULE}`,
     {},
     async () => {
         if (presetStore.size === 0) {
-            return requireImportedPresetsResponse();
+            return requireLoadedTasksResponse();
         }
 
         const list = [];
@@ -397,6 +476,7 @@ server.tool(
             list.push({
                 task_name: name,
                 note: data.note,
+                source: data.source,
                 api: data.api,
                 current_params: data.params,
             });
@@ -413,17 +493,17 @@ server.tool(
     }
 );
 
-// Tool 5: Execute a specific imported preset task ONLY after clear user agreement
+// Tool 6: Execute a specific loaded task ONLY after clear user agreement
 server.tool(
     "execute_seo360_preset",
-    `Execute a specific ALREADY IMPORTED preset task against DataForSEO. Primitive values are sent directly; arrays and objects are sent as JSON. Requires a preset pack to be imported first and clear user agreement (\`user_agreed: true\`) before sending the live request. Records request count and cost in USD.\n\n${STRICT_BOUNDARY_RULE}`,
+    `Execute a specific ALREADY LOADED task against DataForSEO. Requires clear user agreement (\`user_agreed: true\`) before sending the live request. Records request count and cost in USD.\n\n${STRICT_BOUNDARY_RULE}`,
     {
-        task_name: z.string().describe("Exact task name (`note`) of an already-imported preset task to execute"),
+        task_name: z.string().describe("Exact task name of an already-loaded task to execute"),
         user_agreed: z.boolean().describe("Set to true only when the user has clearly agreed to run this live request"),
     },
     async ({ task_name, user_agreed }) => {
         if (presetStore.size === 0) {
-            return requireImportedPresetsResponse();
+            return requireLoadedTasksResponse();
         }
 
         if (!user_agreed) {
@@ -538,7 +618,7 @@ server.tool(
     }
 );
 
-// Tool 6: Query request count, cost per request, and cumulative cost
+// Tool 7: Query request count, cost per request, and cumulative cost
 server.tool(
     "get_usage_and_cost",
     `Query total API request count, success/failure count, cumulative cost in USD, and per-request cost history.\n\n${STRICT_BOUNDARY_RULE}`,
@@ -556,17 +636,17 @@ server.tool(
             content: [
                 {
                     type: "text",
-                    text: `### Request Count & Cost Summary\n- **Total requests**: ${billingLedger.totalRequests} (${billingLedger.successRequests} succeeded / ${billingLedger.failedRequests} failed or errored)\n- **Cumulative cost**: **${formatUsd(billingLedger.totalCostUsd)}**\n- **Loaded preset tasks**: ${presetStore.size}\n\n### Recent ${lines.length} Request(s):\n${lines.length ? lines.join("\n") : "*(No API requests executed yet)*"}`,
+                    text: `### Request Count & Cost Summary\n- **Total requests**: ${billingLedger.totalRequests} (${billingLedger.successRequests} succeeded / ${billingLedger.failedRequests} failed or errored)\n- **Cumulative cost**: **${formatUsd(billingLedger.totalCostUsd)}**\n- **Loaded tasks**: ${presetStore.size}\n\n### Recent ${lines.length} Request(s):\n${lines.length ? lines.join("\n") : "*(No API requests executed yet)*"}`,
                 },
             ],
         };
     }
 );
 
-// Tool 7: Check live DataForSEO account balance via free appendix/user_data endpoint
+// Tool 8: Check live DataForSEO account balance via free appendix/user_data endpoint
 server.tool(
     "get_account_balance",
-    `Check the current DataForSEO account balance, total deposited, and total spent in USD using the free \`v3/appendix/user_data\` endpoint ($0.000000 cost). Does not require importing a preset pack first.\n\n${STRICT_BOUNDARY_RULE}`,
+    `Check the current DataForSEO account balance, total deposited, and total spent in USD using the free \`v3/appendix/user_data\` endpoint ($0.000000 cost).\n\n${STRICT_BOUNDARY_RULE}`,
     {},
     async () => {
         const authHeader = getDataForSeoAuthHeader();
@@ -636,18 +716,14 @@ server.tool(
     }
 );
 
-// Tool 8: Direct users to DataForSEO Official AI for endpoint/parameter/value guidance (or return extension link when asked)
+// Tool 9: Direct users to DataForSEO Official AI for endpoint/parameter/value guidance (or return extension link when asked)
 server.tool(
     "lookup_seo360_param",
-    `Requires an imported preset pack first. Provides the SEO360 Chrome Extension link (${EXTENSION_STORE_URL}) when requested, and does NOT explain endpoints, parameter configuration, or value formats—directs users directly to DataForSEO Official AI (${OFFICIAL_DATAFORSEO_AI_URL}).\n\n${STRICT_BOUNDARY_RULE}`,
+    `Provides the SEO360 Chrome Extension link (${EXTENSION_STORE_URL}) when requested, and does NOT explain endpoints, parameter configuration, or value formats—directs users directly to DataForSEO Official AI (${OFFICIAL_DATAFORSEO_AI_URL}).\n\n${STRICT_BOUNDARY_RULE}`,
     {
         param_names: z.array(z.string()).describe("Parameter or endpoint names the user is asking about"),
     },
     async ({ param_names }) => {
-        if (presetStore.size === 0) {
-            return requireImportedPresetsResponse();
-        }
-
         const keys = param_names.map((k) => `\`${String(k).trim()}\``).join(", ");
         return {
             content: [

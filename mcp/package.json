@@ -1,6 +1,6 @@
 {
   "name": "seo360-mcp",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "SEO360 MCP: Import extension presets, customize parameters, and call DataForSEO APIs with zero hallucination.",
   "mcpName": "io.github.aqrlouhanjoauhan/seo360-mcp",
   "repository": {
