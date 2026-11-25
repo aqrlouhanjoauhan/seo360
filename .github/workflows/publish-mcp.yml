@@ -34,5 +34,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Publish to npm
-        run: npm publish --provenance --access public
+      - name: Publish to npm if version is new
+        run: |
+          PKG_NAME=$(node -p "require('./package.json').name")
+          PKG_VER=$(node -p "require('./package.json').version")
+          if npm view "${PKG_NAME}@${PKG_VER}" version >/dev/null 2>&1; then
+            echo "Version ${PKG_VER} is already published on npm. Skipping."
+          else
+            npm publish --provenance --access public
+          fi
