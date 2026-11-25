@@ -1,6 +1,15 @@
-# SEO360: DataForSEO Free No-Code API Test Tool
+# SEO360: DataForSEO Free No-Code API Test Tool & MCP Server
 
-A free, open-source [Chrome extension](https://chromewebstore.google.com/detail/seo360-dataforseo-free-no/mpphhakiifalmlkphalklimjfkhkpbmp) to test DataForSEO endpoints with zero code. Inspect Google search rankings, search volumes, and custom API responses right in your browser.
+A free, open-source toolkit for working with DataForSEO APIs with zero code—available as both a [Chrome extension](https://chromewebstore.google.com/detail/seo360-dataforseo-free-no/mpphhakiifalmlkphalklimjfkhkpbmp) for visual testing and a local **MCP Server** (`mcp/`) for controlled AI client workflows.
+
+---
+
+## Repository Structure
+
+- [`index.html`](./index.html) — **Landing Page**: Official project homepage and overview.
+- [`/chrome-extension`](./chrome-extension) — **SEO360 Chrome Extension**: Visual DataForSEO API debugging tool that lets you configure endpoints without code, inspect responses as a collapsible JSON tree or structured table view, generate code snippets, and save, import, or export reusable presets.
+- [`/dataforseo`](./dataforseo) — **Endpoint & Schema Configurations**: Data-driven endpoint definitions and parameter configurations powering the Chrome extension.
+- [`/mcp`](./mcp) — **SEO360 MCP Server** (`seo360-mcp`): Local Model Context Protocol server for AI clients (Claude Desktop, Cursor, Cherry Studio, Windsurf, Cline). Imports SEO360 preset packs to edit parameters and run DataForSEO requests with explicit confirmation and USD cost tracking. See [`mcp/README.md`](./mcp/README.md) for setup and full documentation.
 
 ---
 
@@ -17,7 +26,7 @@ A free, open-source [Chrome extension](https://chromewebstore.google.com/detail/
 - **No Code Required**: Build API requests by selecting options instead of writing curl commands or Python scripts.
 - **Pay Per Request**: Pay only wholesale provider rates (fractions of a cent per search) instead of expensive monthly SaaS subscriptions.
 - **Direct & Private**: Your API keys stay in your browser. All requests go directly to DataForSEO with no middleman server.
-- **Inspect & Export**: View responses in a clean JSON tree, preview nested data in tables, export raw query data, and save presets for team sharing.
+- **Inspect & Export**: View responses in a collapsible JSON tree, preview nested data in tables, export raw query data, and save, import, or export presets for team sharing.
 
 ---
 
@@ -32,9 +41,7 @@ A free, open-source [Chrome extension](https://chromewebstore.google.com/detail/
 ## Quick Setup
 
 ### 1. Install Extension
-Add the extension to Chrome via the Web Store and pin it to your toolbar.
-
-*(Or run from source: clone this repo, open `chrome://extensions/`, enable **Developer mode**, and click **Load unpacked**).*
+Install SEO360 from the [Chrome Web Store](https://chromewebstore.google.com/detail/seo360-dataforseo-free-no/mpphhakiifalmlkphalklimjfkhkpbmp) and pin it to your toolbar.
 
 ### 2. Enter Credentials
 Paste your DataForSEO Login and Password/Token into the extension credentials window.
@@ -47,7 +54,7 @@ Select an endpoint (or enter a custom path), adjust your target keyword/country,
 ## Presets & Team Collaboration
 
 - **Save Presets**: Save custom query parameters with optional notes.
-- **Import & Export**: Export your presets to share with colleagues or backup your workflows with zero duplicate entries.
+- **Import & Export**: Export your presets to share with colleagues, backup your workflows, or load into [`seo360-mcp`](./mcp).
 
 ---
 
