@@ -1,0 +1,30 @@
+{
+  "name": "seo360-mcp",
+  "version": "1.0.12",
+  "description": "SEO360 MCP: Import extension presets, customize parameters, and call DataForSEO APIs with zero hallucination.",
+  "homepage": "https://seo360.pages.dev",
+  "type": "module",
+  "main": "index.js",
+  "bin": {
+    "seo360-mcp": "index.js"
+  },
+  "files": [
+    "index.js",
+    "README.md"
+  ],
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "dataforseo",
+    "seo",
+    "seo360",
+    "claude",
+    "cursor",
+    "cherry-studio"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "zod": "^3.23.0"
+  }
+}
