@@ -28,14 +28,16 @@
 
     <!-- 按钮组：Launch Console 置于最上方 -->
     <div class="action-grid">
-      <button id="btn-open-workbench" class="action-btn action-primary">Launch Console ↗</button>
-      <button id="btn-copy-tab-url" class="action-btn action-secondary">Copy Current URL 📋</button>
-      <button id="btn-open-tutorial" class="action-btn action-secondary">Setup Guide ↗</button>
+      <button id="btn-open-workbench" class="action-btn action-primary">Launch Console</button>
+      <!--button id="btn-copy-tab-url" class="action-btn action-secondary">Copy Current URL 📋</button-->
+      <button id="btn-open-ai" class="action-btn action-secondary">Ask DataForSEO AI</button>
+	  <button id="btn-mcp" class="action-btn action-secondary">SEO360 MCP</button>
     </div>
   </div>
 
   <div id="toast" class="toast hidden">URL Copied!</div>
 
+  <script src="../fetch.js"></script>
   <script src="popup.js"></script>
 </body>
 </html>

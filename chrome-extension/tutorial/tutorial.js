@@ -1,20 +1,28 @@
 const BASE_CONFIG_URL = 'https://seo360.pages.dev/dataforseo/base.json';
 const YOUTUBE_TUTORIAL_URL = 'https://www.youtube.com/watch?v=VWBR6FRwKdw';
-let referralUrl = '';
 
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. 读取 session 级临时缓存（关闭浏览器自动清空）
-  chrome.storage.session.get(['cached_referral_url'], (res) => {
-    if (res.cached_referral_url) {
-      referralUrl = res.cached_referral_url;
+  const portalLink = document.getElementById('btn-portal-action');
+
+  const applyReferralUrl = (url) => {
+    if (portalLink && url) {
+      portalLink.href = url;
+    }
+  };
+
+  // 1. 读取 session 缓存（同时兼容主控制台的 cached_base_config）
+  chrome.storage.session.get(['cached_referral_url', 'cached_base_config'], (res) => {
+    const cachedUrl = res.cached_referral_url || res.cached_base_config?.affiliate_url;
+    if (cachedUrl) {
+      applyReferralUrl(cachedUrl);
     } else {
-      // 本次浏览器会话尚未缓存，拉取并写入 session
+      // 尚未缓存时拉取 base.json 并动态更新 <a> 标签的 href
       fetch(BASE_CONFIG_URL)
         .then(response => response.json())
         .then(data => {
           const remoteUrl = data.dataforseo || data.affiliate_url;
           if (remoteUrl) {
-            referralUrl = remoteUrl;
+            applyReferralUrl(remoteUrl);
             chrome.storage.session.set({ cached_referral_url: remoteUrl });
           }
         })
@@ -24,16 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // 2. 步骤 1：直达 DataForSEO
-  document.getElementById('btn-portal-action').onclick = () => {
-    if (referralUrl) {
-      chrome.tabs.create({ url: referralUrl });
-    } else {
-      alert('Loading configuration, please try again in a moment...');
-    }
-  };
-
-  // 3. 步骤 2：截图点击放大 (Lightbox 模态查看)
+  // 2. 步骤 2：截图点击放大 (Lightbox 模态查看)
   const imgTrigger = document.getElementById('img-trigger');
   const lightboxModal = document.getElementById('lightbox-modal');
   const btnCloseLightbox = document.getElementById('btn-close-lightbox');
@@ -49,12 +48,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (backdrop) backdrop.onclick = closeLightbox;
   }
 
-  // 4. 步骤 3：直达控制台
-  document.getElementById('btn-open-console').onclick = () => {
-    chrome.tabs.create({ url: chrome.runtime.getURL('workbench/index.html') });
-  };
+  // 3. 步骤 3：直达控制台
+  const openConsoleBtn = document.getElementById('btn-open-console');
+  if (openConsoleBtn) {
+    openConsoleBtn.onclick = () => {
+      chrome.tabs.create({ url: chrome.runtime.getURL('workbench/index.html') });
+    };
+  }
 
-  // 5. 备用视频直达 YouTube
+  // 4. 备用视频直达 YouTube
   const videoCard = document.getElementById('video-card-link');
   if (videoCard) {
     videoCard.onclick = () => {

@@ -15,7 +15,7 @@
       </div>
 
       <div class="search-wrap">
-        <input type="text" id="api-search" placeholder="Search Google endpoints..." autocomplete="off">
+        <input type="text" id="api-search" placeholder="Search endpoints..." autocomplete="off">
       </div>
 
       <div class="sidebar-list" id="api-list">
@@ -94,7 +94,7 @@
           </div>
           <div class="res-actions">
             <span id="res-status" class="status-tag">IDLE</span>
-            <button id="btn-copy-full-json" class="btn btn-outline btn-sm" disabled>Copy JSON</button>
+            <button id="btn-copy-full-json" class="btn btn-outline btn-sm" disabled>Copy Full JSON</button>
             <button id="btn-export-full-json" class="btn btn-outline btn-sm" disabled>Export Full JSON</button>
           </div>
         </div>
@@ -110,12 +110,13 @@
           <div class="code-title-left">
             <h2>Code Snippet</h2>
             <div class="lang-selector">
-              <button class="lang-btn active" data-lang="curl">cURL</button>
+              <button class="lang-btn active" data-lang="mcp">MCP</button>
               <button class="lang-btn" data-lang="python">Python</button>
               <button class="lang-btn" data-lang="nodejs">Node.js</button>
-              <button class="lang-btn" data-lang="php">PHP</button>
               <button class="lang-btn" data-lang="go">Go</button>
               <button class="lang-btn" data-lang="java">Java</button>
+			  <button class="lang-btn" data-lang="php">PHP</button>
+			  <button class="lang-btn" data-lang="curl">cURL</button>
             </div>
           </div>
           <div class="code-title-right">
@@ -171,12 +172,13 @@
 
   <!-- Modal 2: Presets -->
   <div id="modal-favorites" class="modal-layer hidden">
-    <div class="modal-window modal-wide">
+    <div class="modal-window modal-wide modal-presets">
       <div class="modal-head-line">
-        <div style="display: flex; align-items: center; gap: 12px;">
+        <div class="preset-header-tools">
           <h3 style="margin: 0;">Saved Presets</h3>
           <button id="btn-import-presets" class="btn btn-outline btn-sm" title="Import presets file">📥 Import</button>
           <button id="btn-export-presets" class="btn btn-outline btn-sm" title="Export presets file">📤 Export</button>
+          <input type="text" id="preset-search" class="preset-search-input" placeholder="Search note or API..." autocomplete="off">
           <input type="file" id="file-import-presets" accept=".json,application/json" class="hidden" multiple>
         </div>
         <button id="btn-close-fav" class="close-x">&times;</button>
@@ -251,6 +253,15 @@
 
   <div id="toast" class="toast-box"></div>
 
-  <script src="workbench.js"></script>
+    <!-- 1. 公共网络请求层（popup 也可直接复用） -->
+	<script src="../fetch.js"></script>
+
+	<!-- 2. 三个独立业务模块 -->
+	<script src="params.js"></script>
+	<script src="response.js"></script>
+	<script src="codegen.js"></script>
+
+	<!-- 3. 主入口调度 -->
+	<script src="workbench.js"></script>
 </body>
 </html>
