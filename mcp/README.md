@@ -54,4 +54,5 @@ Add the following configuration to your MCP client:
 ## Links
 
 * **SEO360 Chrome Extension**: [Chrome Web Store](https://chromewebstore.google.com/detail/seo360-dataforseo-free-no/mpphhakiifalmlkphalklimjfkhkpbmp)
+* **SEO360 MCP Package**: [npm (`seo360-mcp`)](https://www.npmjs.com/package/seo360-mcp)
 * **Official DataForSEO AI**: <https://chat.dataforseo.com/>
